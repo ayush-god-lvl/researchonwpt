@@ -21,7 +21,7 @@
             color: #2c3e50;
             overflow-x: hidden;
             line-height: 1.8;
-            font-size: 18px; /* Base font size increased for better readability on A4 */
+            font-size: 19px; /* Base font size increased for better readability on A4 and screen */
         }
 
         /* Navigation Bar */
@@ -180,7 +180,7 @@
         }
 
         .slide p {
-            font-size: 1.1em; /* Relative to body font size */
+            font-size: 1em; /* Relative to body font size */
             margin-bottom: 1.4rem;
             color: #2c3e50;
             text-align: justify;
@@ -193,7 +193,7 @@
         }
 
         .slide li {
-            font-size: 1.05em; /* Relative to body font size */
+            font-size: 0.95em; /* Relative to body font size, slightly smaller for lists */
             margin-bottom: 1rem;
             color: #2c3e50;
             line-height: 1.7;
@@ -251,7 +251,7 @@
             border: 1px solid #bdc3c7;
             padding: 1.2rem; /* Increased */
             text-align: left;
-            font-size: 0.95em; /* Relative to body font size */
+            font-size: 0.9em; /* Relative to body font size */
         }
 
         .materials-table th {
@@ -362,7 +362,7 @@
 
         .references li {
             margin-bottom: 1.2rem; /* Increased */
-            font-size: 1em; /* Relative to body font size */
+            font-size: 0.95em; /* Relative to body font size */
         }
 
         /* Responsive Design */
@@ -511,10 +511,10 @@
 
                 <h3><span class="section-number">3.3</span>Modern Applications</h3>
                 <ul>
-                    <li><strong>Wireless Charging Pads:</strong> Smartphones, smartwatches (Qi standard)</li>
-                    <li><strong>Electric Vehicles:</strong> Stationary and dynamic charging systems</li>
-                    <li><strong>Medical Implants:</strong> Powering devices without invasive battery replacement</li>
-                    <li><strong>Industrial Applications:</strong> Powering sensors in harsh environments</li>
+                    <li>**Wireless Charging Pads:** Smartphones, smartwatches (Qi standard)</li>
+                    <li>**Electric Vehicles:** Stationary and dynamic charging systems</li>
+                    <li>**Medical Implants:** Powering devices without invasive battery replacement</li>
+                    <li>**Industrial Applications:** Powering sensors in harsh environments</li>
                 </ul>
 
                 <h3><span class="section-number">3.4</span>Project Implementation</h3>
@@ -614,9 +614,9 @@
                 <h3><span class="section-number">5.3</span>Operational Range Analysis</h3>
                 <p>The system demonstrated effective operation within a specific proximity range:</p>
                 <ul>
-                    <li><strong>Optimal Range:</strong> 0-2 cm (maximum LED brightness)</li>
-                    <li><strong>Effective Range:</strong> 2-5 cm (visible but dimmer illumination)</li>
-                    <li><strong>Cutoff Range:</strong> >5 cm (insufficient coupling for LED operation)</li>
+                    <li>**Optimal Range:** 0-2 cm (maximum LED brightness)</li>
+                    <li>**Effective Range:** 2-5 cm (visible but dimmer illumination)</li>
+                    <li>**Cutoff Range:** >5 cm (insufficient coupling for LED operation)</li>
                 </ul>
 
                 <h3><span class="section-number">5.4</span>Efficiency Considerations</h3>
@@ -762,36 +762,34 @@
             };
 
             // Apply temporary styles for better PDF rendering
-            // These might improve how html2canvas renders the content
-            slideContent.style.maxWidth = '100%'; // Allow content to take full width of canvas
-            slideContent.style.padding = '20mm'; // More generous padding for print
-            slideContent.style.boxShadow = 'none'; // Remove box shadow for cleaner PDF
-            slideContent.style.border = 'none'; // Remove border for cleaner PDF
-            slideContent.style.margin = '0'; // Remove margin for full canvas utilization
-            slideContent.style.backgroundColor = '#ffffff'; // Ensure white background
+            slideContent.style.maxWidth = '100%'; 
+            slideContent.style.padding = '20mm'; 
+            slideContent.style.boxShadow = 'none'; 
+            slideContent.style.border = 'none'; 
+            slideContent.style.margin = '0'; 
+            slideContent.style.backgroundColor = '#ffffff'; 
 
-            // Temporarily hide elements that shouldn't be in the PDF, e.g., the download button itself
+            // Temporarily hide elements that shouldn't be in the PDF
             downloadPdfButton.style.display = 'none'; 
-            // Also hide navigation arrows and indicators if they are within the screenshot area
             document.querySelector('.nav-arrow.prev').style.display = 'none';
             document.querySelector('.nav-arrow.next').style.display = 'none';
             document.querySelector('.slide-indicators').style.display = 'none';
 
             try {
-                // Generate canvas from slide content
+                // Generate canvas from slide content with increased scale
                 const canvas = await html2canvas(slideContent, {
-                    scale: 2, // Higher scale for better resolution in PDF
-                    useCORS: true, // Important if you have external images
-                    logging: false, // Set to true for debugging html2canvas issues
-                    windowWidth: slideContent.scrollWidth, // Capture full scrollable width
-                    windowHeight: slideContent.scrollHeight // Capture full scrollable height
+                    scale: 3, // Increased scale for significantly larger text in PDF
+                    useCORS: true, 
+                    logging: false, 
+                    windowWidth: slideContent.scrollWidth, 
+                    windowHeight: slideContent.scrollHeight 
                 });
 
                 // Restore original styles and visibility
                 for (const style in originalStyles) {
                     slideContent.style[style] = originalStyles[style];
                 }
-                downloadPdfButton.style.display = ''; // Restore display
+                downloadPdfButton.style.display = ''; 
                 document.querySelector('.nav-arrow.prev').style.display = '';
                 document.querySelector('.nav-arrow.next').style.display = '';
                 document.querySelector('.slide-indicators').style.display = '';
@@ -799,17 +797,17 @@
                 const imgData = canvas.toDataURL('image/png');
                 const { jsPDF } = window.jspdf;
                 const pdf = new jsPDF({
-                    orientation: 'p', // Portrait
+                    orientation: 'p', 
                     unit: 'mm',
                     format: 'a4'
                 });
 
                 const imgWidth = 210; // A4 width in mm
                 const pageHeight = 297; // A4 height in mm
-                const imgHeight = canvas.height * imgWidth / canvas.width; // Calculate image height scaled to A4 width
+                const imgHeight = canvas.height * imgWidth / canvas.width; 
                 let heightLeft = imgHeight;
 
-                let position = 0; // Starting position on the PDF page
+                let position = 0; 
 
                 // Add image to PDF, handling multiple pages if content is too long
                 pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
@@ -825,7 +823,6 @@
                 // Generate a filename based on the slide's title
                 const slideTitleElement = currentSlideElement.querySelector('h1, h2, h3');
                 const slideTitle = slideTitleElement ? slideTitleElement.innerText : `Slide_${currentSlide + 1}`;
-                // Clean filename: remove special characters and replace spaces with underscores
                 const filename = `${slideTitle.replace(/[^a-zA-Z0-9 ]/g, '').replace(/\s+/g, '_')}.pdf`;
 
                 pdf.save(filename);
@@ -836,7 +833,7 @@
                 for (const style in originalStyles) {
                     slideContent.style[style] = originalStyles[style];
                 }
-                downloadPdfButton.style.display = ''; // Restore display
+                downloadPdfButton.style.display = ''; 
                 document.querySelector('.nav-arrow.prev').style.display = '';
                 document.querySelector('.nav-arrow.next').style.display = '';
                 document.querySelector('.slide-indicators').style.display = '';
@@ -870,7 +867,7 @@
             document.addEventListener('touchstart', (e) => {
                 startX = e.touches[0].clientX;
                 startY = e.touches[0].clientY;
-            }, { passive: true }); // Use passive listener for better scroll performance
+            }, { passive: true }); 
             
             document.addEventListener('touchend', (e) => {
                 const endX = e.changedTouches[0].clientX;
@@ -879,11 +876,11 @@
                 const diffY = startY - endY;
                 
                 // Determine if it was a horizontal swipe
-                if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 50) { // Threshold of 50px for a valid swipe
+                if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 50) { 
                     if (diffX > 0) {
-                        changeSlide(1); // Swipe left (from user's perspective) -> next slide
+                        changeSlide(1); 
                     } else {
-                        changeSlide(-1); // Swipe right (from user's perspective) -> previous slide
+                        changeSlide(-1); 
                     }
                 }
             }); 
