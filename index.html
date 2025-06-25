@@ -4,7 +4,434 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wireless Power Transfer Arc Reactor - Research Paper</title>
-    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body and Font */
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            background: #f8f9fa;
+            color: #2c3e50;
+            overflow-x: hidden;
+            line-height: 1.8;
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 1rem 2rem;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid #34495e;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            flex-wrap: wrap; /* Allow wrapping on smaller screens */
+        }
+
+        .logo {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #2c3e50;
+            font-family: 'Georgia', serif;
+            flex-shrink: 0; /* Prevent shrinking */
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 1.5rem;
+            list-style: none;
+            margin-left: auto; /* Push menu to the right */
+        }
+
+        .nav-item {
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        .nav-item:hover {
+            background: #ecf0f1;
+            color: #2980b9;
+        }
+
+        .nav-item.active {
+            background: #2980b9;
+            color: white;
+        }
+
+        /* Download Button */
+        .download-button {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.2rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+            margin-left: 1rem; /* Space from nav menu */
+        }
+
+        .download-button:hover {
+            background: #218838;
+        }
+
+        /* Slide Container */
+        .slide-container {
+            position: relative;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: flex-start; /* Align content to the top */
+            justify-content: center;
+            opacity: 0;
+            transform: translateX(100%);
+            transition: all 0.6s ease-in-out;
+            padding: 6rem 2rem 2rem; /* Top padding for navbar */
+            overflow-y: auto; /* Enable scrolling for long slides */
+            box-sizing: border-box; /* Include padding in height calculation */
+        }
+
+        .slide.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .slide.prev {
+            transform: translateX(-100%);
+        }
+
+        /* Academic Paper Content Styling */
+        .slide-content {
+            max-width: 900px;
+            width: 100%;
+            background: white;
+            padding: 3rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e0e0e0;
+            margin: 0 auto; /* Center the content */
+        }
+
+        /* Typography */
+        .slide h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #2c3e50;
+            text-align: center;
+            font-weight: 700;
+            border-bottom: 3px solid #2980b9;
+            padding-bottom: 1rem;
+        }
+
+        .slide h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: #34495e;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .slide h3 {
+            font-size: 1.4rem;
+            margin: 1.5rem 0 1rem 0;
+            color: #2c3e50;
+            font-weight: 600;
+            border-left: 4px solid #2980b9;
+            padding-left: 1rem;
+        }
+
+        .slide h4 {
+            font-size: 1.2rem;
+            margin: 1rem 0 0.5rem 0;
+            color: #34495e;
+            font-weight: 600;
+        }
+
+        .slide p {
+            font-size: 1.1rem;
+            margin-bottom: 1.2rem;
+            color: #2c3e50;
+            text-align: justify;
+            line-height: 1.8;
+        }
+
+        .slide ul, .slide ol {
+            margin: 1rem 0 1.5rem 2rem;
+            padding-left: 0; /* Remove default padding from list */
+        }
+
+        .slide li {
+            font-size: 1.1rem;
+            margin-bottom: 0.8rem;
+            color: #2c3e50;
+            line-height: 1.7;
+        }
+
+        /* Abstract and Keywords Section */
+        .abstract {
+            background: #f8f9fa;
+            border-left: 4px solid #2980b9;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 4px;
+        }
+
+        .abstract h4 {
+            color: #2980b9;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .keywords {
+            background: #ecf0f1;
+            padding: 1rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+            font-style: italic;
+        }
+
+        /* Circuit Diagram Placeholder */
+        .circuit-diagram {
+            width: 100%;
+            max-width: 600px;
+            height: 300px;
+            background: #f8f9fa;
+            border: 2px dashed #95a5a6;
+            margin: 2rem auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            color: #7f8c8d;
+            border-radius: 4px;
+        }
+
+        /* Tables */
+        .materials-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background: white;
+        }
+
+        .materials-table th,
+        .materials-table td {
+            border: 1px solid #bdc3c7;
+            padding: 1rem;
+            text-align: left;
+        }
+
+        .materials-table th {
+            background: #34495e;
+            color: white;
+            font-weight: 600;
+        }
+
+        .materials-table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        /* Equations */
+        .equation {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            text-align: center;
+            border-radius: 4px;
+            border: 1px solid #e0e0e0;
+            font-family: 'Courier New', monospace;
+            font-size: 1.2rem;
+        }
+
+        /* Figure Captions */
+        .figure-caption {
+            text-align: center;
+            font-style: italic;
+            color: #7f8c8d;
+            margin-top: 0.5rem;
+            font-size: 1rem;
+        }
+
+        /* Navigation Arrows */
+        .nav-arrow {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            background: white;
+            border: 2px solid #2980b9;
+            color: #2980b9;
+            padding: 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 100;
+            font-size: 1.2rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-arrow:hover {
+            background: #2980b9;
+            color: white;
+            transform: translateY(-50%) scale(1.05);
+        }
+
+        .nav-arrow.prev {
+            left: 2rem;
+        }
+
+        .nav-arrow.next {
+            right: 2rem;
+        }
+
+        /* Slide Indicators (Dots at bottom) */
+        .slide-indicators {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 0.5rem;
+            z-index: 100;
+        }
+
+        .indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #bdc3c7;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid white;
+        }
+
+        .indicator.active {
+            background: #2980b9;
+            transform: scale(1.3);
+        }
+
+        /* References Section */
+        .references {
+            background: #f8f9fa;
+            padding: 2rem;
+            margin: 2rem 0;
+            border-radius: 4px;
+            border-left: 4px solid #2980b9;
+        }
+
+        .references h4 {
+            color: #2980b9;
+            margin-bottom: 1rem;
+        }
+
+        .references ol {
+            margin-left: 1rem;
+        }
+
+        .references li {
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .slide-content {
+                padding: 2rem 1.5rem;
+                margin: 0 1rem;
+            }
+            
+            .slide h1 { font-size: 2rem; }
+            .slide h2 { font-size: 1.6rem; }
+            .slide h3 { font-size: 1.3rem; }
+            .slide p, .slide li { font-size: 1rem; }
+            
+            /* Hide nav menu on smaller screens */
+            .nav-menu { display: none; }
+            
+            .nav-arrow { padding: 0.8rem; font-size: 1rem; }
+            
+            .materials-table {
+                font-size: 0.9rem;
+            }
+            
+            .materials-table th,
+            .materials-table td {
+                padding: 0.5rem;
+            }
+
+            .download-button {
+                padding: 0.6rem 0.8rem;
+                font-size: 0.8rem;
+                margin-top: 0.5rem; /* Add margin on top for wrapping */
+                margin-left: 0; /* Reset left margin */
+                width: 100%; /* Make button full width */
+            }
+            .nav-container {
+                flex-direction: column;
+                align-items: flex-start; /* Align items to the start when column */
+                gap: 0.5rem;
+            }
+            .logo {
+                margin-bottom: 0.5rem;
+            }
+        }
+
+        /* Author info */
+        .author-info {
+            text-align: center;
+            margin: 2rem 0;
+            padding: 1rem;
+            background: #ecf0f1;
+            border-radius: 4px;
+        }
+
+        .author-info h4 {
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+        }
+
+        .author-info p {
+            margin: 0.5rem 0;
+            font-size: 1rem;
+        }
+
+        /* Section numbering */
+        .section-number {
+            color: #2980b9;
+            font-weight: 700;
+            margin-right: 0.5rem;
+        }
+    </style>
 </head>
 <body>
     <nav class="navbar">
@@ -258,8 +685,207 @@
         <div class="indicator" data-slide="5"></div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
-    <script src="js/app.js"></script>
+    <script>
+        let currentSlide = 0;
+        const totalSlides = 6;
+        const slides = document.querySelectorAll('.slide');
+        const indicators = document.querySelectorAll('.indicator');
+        const navItems = document.querySelectorAll('.nav-item');
+        const downloadPdfButton = document.getElementById('downloadPdfButton');
+
+        // Change slide function
+        function changeSlide(direction) {
+            const newSlide = currentSlide + direction;
+            
+            if (newSlide >= 0 && newSlide < totalSlides) {
+                goToSlide(newSlide);
+            }
+        }
+
+        // Go to specific slide
+        function goToSlide(slideIndex) {
+            // Update current slide
+            slides[currentSlide].classList.remove('active');
+            // Add 'prev' or 'next' for slide transition direction
+            slides[currentSlide].classList.add(slideIndex > currentSlide ? 'prev' : 'next');
+            
+            currentSlide = slideIndex;
+            
+            // Activate new slide
+            slides[currentSlide].classList.remove('prev', 'next'); // Ensure old direction classes are removed
+            slides[currentSlide].classList.add('active');
+            
+            // Update indicators
+            indicators.forEach((indicator, index) => {
+                indicator.classList.toggle('active', index === currentSlide);
+            });
+            
+            // Update navigation items
+            navItems.forEach((item, index) => {
+                item.classList.toggle('active', index === currentSlide);
+            });
+            
+            // Clean up classes after transition to prevent interference with next transitions
+            setTimeout(() => {
+                slides.forEach(slide => {
+                    if (!slide.classList.contains('active')) {
+                        slide.classList.remove('prev', 'next');
+                    }
+                });
+            }, 600); // Must be equal to or slightly longer than the CSS transition duration
+        }
+
+        // Function to download current slide as PDF
+        async function downloadCurrentSlideAsPdf() {
+            const currentSlideElement = slides[currentSlide];
+            const slideContent = currentSlideElement.querySelector('.slide-content');
+
+            if (!slideContent) {
+                console.error("No .slide-content found in the active slide.");
+                alert("Could not find content to generate PDF for this slide.");
+                return;
+            }
+
+            // Store original styles to restore them after screenshot
+            const originalStyles = {
+                maxWidth: slideContent.style.maxWidth,
+                padding: slideContent.style.padding,
+                boxShadow: slideContent.style.boxShadow,
+                border: slideContent.style.border,
+                margin: slideContent.style.margin,
+                backgroundColor: slideContent.style.backgroundColor
+            };
+
+            // Apply temporary styles for better PDF rendering
+            // These might improve how html2canvas renders the content
+            slideContent.style.maxWidth = '100%'; // Allow content to take full width of canvas
+            slideContent.style.padding = '20mm'; // More generous padding for print
+            slideContent.style.boxShadow = 'none'; // Remove box shadow for cleaner PDF
+            slideContent.style.border = 'none'; // Remove border for cleaner PDF
+            slideContent.style.margin = '0'; // Remove margin for full canvas utilization
+            slideContent.style.backgroundColor = '#ffffff'; // Ensure white background
+
+            // Temporarily hide elements that shouldn't be in the PDF, e.g., the download button itself
+            downloadPdfButton.style.display = 'none'; 
+            // Also hide navigation arrows and indicators if they are within the screenshot area
+            document.querySelector('.nav-arrow.prev').style.display = 'none';
+            document.querySelector('.nav-arrow.next').style.display = 'none';
+            document.querySelector('.slide-indicators').style.display = 'none';
+
+            try {
+                // Generate canvas from slide content
+                const canvas = await html2canvas(slideContent, {
+                    scale: 2, // Higher scale for better resolution in PDF
+                    useCORS: true, // Important if you have external images
+                    logging: false, // Set to true for debugging html2canvas issues
+                    windowWidth: slideContent.scrollWidth, // Capture full scrollable width
+                    windowHeight: slideContent.scrollHeight // Capture full scrollable height
+                });
+
+                // Restore original styles and visibility
+                for (const style in originalStyles) {
+                    slideContent.style[style] = originalStyles[style];
+                }
+                downloadPdfButton.style.display = ''; // Restore display
+                document.querySelector('.nav-arrow.prev').style.display = '';
+                document.querySelector('.nav-arrow.next').style.display = '';
+                document.querySelector('.slide-indicators').style.display = '';
+
+                const imgData = canvas.toDataURL('image/png');
+                const { jsPDF } = window.jspdf;
+                const pdf = new jsPDF({
+                    orientation: 'p', // Portrait
+                    unit: 'mm',
+                    format: 'a4'
+                });
+
+                const imgWidth = 210; // A4 width in mm
+                const pageHeight = 297; // A4 height in mm
+                const imgHeight = canvas.height * imgWidth / canvas.width; // Calculate image height scaled to A4 width
+                let heightLeft = imgHeight;
+
+                let position = 0; // Starting position on the PDF page
+
+                // Add image to PDF, handling multiple pages if content is too long
+                pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+                heightLeft -= pageHeight;
+
+                while (heightLeft >= 0) {
+                    position = heightLeft - imgHeight;
+                    pdf.addPage();
+                    pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+                    heightLeft -= pageHeight;
+                }
+
+                // Generate a filename based on the slide's title
+                const slideTitleElement = currentSlideElement.querySelector('h1, h2, h3');
+                const slideTitle = slideTitleElement ? slideTitleElement.innerText : `Slide_${currentSlide + 1}`;
+                // Clean filename: remove special characters and replace spaces with underscores
+                const filename = `${slideTitle.replace(/[^a-zA-Z0-9 ]/g, '').replace(/\s+/g, '_')}.pdf`;
+
+                pdf.save(filename);
+
+            } catch (error) {
+                console.error("Error generating PDF:", error);
+                // Ensure original styles and visibility are restored even on error
+                for (const style in originalStyles) {
+                    slideContent.style[style] = originalStyles[style];
+                }
+                downloadPdfButton.style.display = ''; // Restore display
+                document.querySelector('.nav-arrow.prev').style.display = '';
+                document.querySelector('.nav-arrow.next').style.display = '';
+                document.querySelector('.slide-indicators').style.display = '';
+                alert("Failed to generate PDF. Please try again. Check console for details.");
+            }
+        }
+
+
+        // Add event listeners on DOMContentLoaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Indicator clicks
+            indicators.forEach((indicator, index) => {
+                indicator.addEventListener('click', () => goToSlide(index));
+            });
+            
+            // Navigation menu clicks
+            navItems.forEach((item, index) => {
+                item.addEventListener('click', () => goToSlide(index));
+            });
+            
+            // Keyboard navigation
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowLeft') changeSlide(-1);
+                if (e.key === 'ArrowRight') changeSlide(1);
+            });
+            
+            // Touch/swipe support
+            let startX = 0;
+            let startY = 0;
+            
+            document.addEventListener('touchstart', (e) => {
+                startX = e.touches[0].clientX;
+                startY = e.touches[0].clientY;
+            }, { passive: true }); // Use passive listener for better scroll performance
+            
+            document.addEventListener('touchend', (e) => {
+                const endX = e.changedTouches[0].clientX;
+                const endY = e.changedTouches[0].clientY;
+                const diffX = startX - endX;
+                const diffY = startY - endY;
+                
+                // Determine if it was a horizontal swipe
+                if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 50) { // Threshold of 50px for a valid swipe
+                    if (diffX > 0) {
+                        changeSlide(1); // Swipe left (from user's perspective) -> next slide
+                    } else {
+                        changeSlide(-1); // Swipe right (from user's perspective) -> previous slide
+                    }
+                }
+            }); 
+
+            // Download PDF button click
+            downloadPdfButton.addEventListener('click', downloadCurrentSlideAsPdf);
+        });
+    </script>
 </body>
 </html>
