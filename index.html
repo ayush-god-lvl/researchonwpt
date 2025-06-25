@@ -21,6 +21,7 @@
             color: #2c3e50;
             overflow-x: hidden;
             line-height: 1.8;
+            font-size: 18px; /* Base font size increased for better readability on A4 */
         }
 
         /* Navigation Bar */
@@ -145,8 +146,8 @@
 
         /* Typography */
         .slide h1 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
+            font-size: 2.8rem; /* Increased */
+            margin-bottom: 1.2rem;
             color: #2c3e50;
             text-align: center;
             font-weight: 700;
@@ -155,16 +156,16 @@
         }
 
         .slide h2 {
-            font-size: 2rem;
-            margin-bottom: 1.5rem;
+            font-size: 2.2rem; /* Increased */
+            margin-bottom: 1.8rem;
             color: #34495e;
             text-align: center;
             font-weight: 600;
         }
 
         .slide h3 {
-            font-size: 1.4rem;
-            margin: 1.5rem 0 1rem 0;
+            font-size: 1.6rem; /* Increased */
+            margin: 1.8rem 0 1.2rem 0;
             color: #2c3e50;
             font-weight: 600;
             border-left: 4px solid #2980b9;
@@ -172,28 +173,28 @@
         }
 
         .slide h4 {
-            font-size: 1.2rem;
-            margin: 1rem 0 0.5rem 0;
+            font-size: 1.4rem; /* Increased */
+            margin: 1.2rem 0 0.8rem 0;
             color: #34495e;
             font-weight: 600;
         }
 
         .slide p {
-            font-size: 1.1rem;
-            margin-bottom: 1.2rem;
+            font-size: 1.1em; /* Relative to body font size */
+            margin-bottom: 1.4rem;
             color: #2c3e50;
             text-align: justify;
             line-height: 1.8;
         }
 
         .slide ul, .slide ol {
-            margin: 1rem 0 1.5rem 2rem;
-            padding-left: 0; /* Remove default padding from list */
+            margin: 1.2rem 0 1.8rem 2.5rem; /* Adjusted for larger text */
+            padding-left: 0;
         }
 
         .slide li {
-            font-size: 1.1rem;
-            margin-bottom: 0.8rem;
+            font-size: 1.05em; /* Relative to body font size */
+            margin-bottom: 1rem;
             color: #2c3e50;
             line-height: 1.7;
         }
@@ -202,21 +203,21 @@
         .abstract {
             background: #f8f9fa;
             border-left: 4px solid #2980b9;
-            padding: 1.5rem;
-            margin: 2rem 0;
+            padding: 1.8rem; /* Increased */
+            margin: 2.5rem 0; /* Increased */
             border-radius: 4px;
         }
 
         .abstract h4 {
             color: #2980b9;
-            margin-bottom: 1rem;
-            font-size: 1.3rem;
+            margin-bottom: 1.2rem; /* Increased */
+            font-size: 1.4em; /* Relative to body font size */
         }
 
         .keywords {
             background: #ecf0f1;
-            padding: 1rem;
-            margin: 1.5rem 0;
+            padding: 1.2rem; /* Increased */
+            margin: 1.8rem 0; /* Increased */
             border-radius: 4px;
             font-style: italic;
         }
@@ -224,15 +225,15 @@
         /* Circuit Diagram Placeholder */
         .circuit-diagram {
             width: 100%;
-            max-width: 600px;
-            height: 300px;
+            max-width: 650px; /* Slightly increased */
+            height: 350px; /* Slightly increased */
             background: #f8f9fa;
             border: 2px dashed #95a5a6;
-            margin: 2rem auto;
+            margin: 2.5rem auto; /* Increased */
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.1rem;
+            font-size: 1.1em; /* Relative to body font size */
             color: #7f8c8d;
             border-radius: 4px;
         }
@@ -241,15 +242,16 @@
         .materials-table {
             width: 100%;
             border-collapse: collapse;
-            margin: 2rem 0;
+            margin: 2.5rem 0; /* Increased */
             background: white;
         }
 
         .materials-table th,
         .materials-table td {
             border: 1px solid #bdc3c7;
-            padding: 1rem;
+            padding: 1.2rem; /* Increased */
             text-align: left;
+            font-size: 0.95em; /* Relative to body font size */
         }
 
         .materials-table th {
@@ -265,13 +267,13 @@
         /* Equations */
         .equation {
             background: #f8f9fa;
-            padding: 1.5rem;
-            margin: 2rem 0;
+            padding: 1.8rem; /* Increased */
+            margin: 2.5rem 0; /* Increased */
             text-align: center;
             border-radius: 4px;
             border: 1px solid #e0e0e0;
             font-family: 'Courier New', monospace;
-            font-size: 1.2rem;
+            font-size: 1.3em; /* Relative to body font size */
         }
 
         /* Figure Captions */
@@ -279,8 +281,8 @@
             text-align: center;
             font-style: italic;
             color: #7f8c8d;
-            margin-top: 0.5rem;
-            font-size: 1rem;
+            margin-top: 0.8rem; /* Increased */
+            font-size: 0.9em; /* Relative to body font size */
         }
 
         /* Navigation Arrows */
@@ -343,37 +345,40 @@
         /* References Section */
         .references {
             background: #f8f9fa;
-            padding: 2rem;
-            margin: 2rem 0;
+            padding: 2.5rem; /* Increased */
+            margin: 3rem 0; /* Increased */
             border-radius: 4px;
             border-left: 4px solid #2980b9;
         }
 
         .references h4 {
             color: #2980b9;
-            margin-bottom: 1rem;
+            margin-bottom: 1.2rem; /* Increased */
         }
 
         .references ol {
-            margin-left: 1rem;
+            margin-left: 1.5rem; /* Increased */
         }
 
         .references li {
-            margin-bottom: 1rem;
-            font-size: 1rem;
+            margin-bottom: 1.2rem; /* Increased */
+            font-size: 1em; /* Relative to body font size */
         }
 
         /* Responsive Design */
         @media (max-width: 768px) {
+            body {
+                font-size: 16px; /* Slightly smaller base font for mobile */
+            }
             .slide-content {
                 padding: 2rem 1.5rem;
                 margin: 0 1rem;
             }
             
-            .slide h1 { font-size: 2rem; }
-            .slide h2 { font-size: 1.6rem; }
-            .slide h3 { font-size: 1.3rem; }
-            .slide p, .slide li { font-size: 1rem; }
+            .slide h1 { font-size: 1.8rem; } /* Adjusted for mobile */
+            .slide h2 { font-size: 1.4rem; } /* Adjusted for mobile */
+            .slide h3 { font-size: 1.2rem; } /* Adjusted for mobile */
+            .slide p, .slide li { font-size: 0.9em; } /* Adjusted for mobile */
             
             /* Hide nav menu on smaller screens */
             .nav-menu { display: none; }
@@ -381,7 +386,7 @@
             .nav-arrow { padding: 0.8rem; font-size: 1rem; }
             
             .materials-table {
-                font-size: 0.9rem;
+                font-size: 0.85em; /* Adjusted for mobile */
             }
             
             .materials-table th,
@@ -422,7 +427,7 @@
 
         .author-info p {
             margin: 0.5rem 0;
-            font-size: 1rem;
+            font-size: 1em; /* Relative to body font size */
         }
 
         /* Section numbering */
