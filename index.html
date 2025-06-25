@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wireless Power Transfer Arc Reactor - Research Paper</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            background: #f8f9fa;
+            color: #2c3e50;
+            overflow-x: hidden;
+            line-height: 1.8;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 1rem 2rem;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid #34495e;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #2c3e50;
+            font-family: 'Georgia', serif;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 1.5rem;
+            list-style: none;
+        }
+
+        .nav-item {
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        .nav-item:hover {
+            background: #ecf0f1;
+            color: #2980b9;
+        }
+
+        .nav-item.active {
+            background: #2980b9;
+            color: white;
+        }
+
+        /* Slide Container */
+        .slide-container {
+            position: relative;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            opacity: 0;
+            transform: translateX(100%);
+            transition: all 0.6s ease-in-out;
+            padding: 6rem 2rem 2rem;
+            overflow-y: auto;
+        }
+
+        .slide.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .slide.prev {
+            transform: translateX(-100%);
+        }
+
+        /* Academic Paper Styling */
+        .slide-content {
+            max-width: 900px;
+            width: 100%;
+            background: white;
+            padding: 3rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e0e0e0;
+            margin: 0 auto;
+        }
+
+        /* Typography */
+        .slide h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #2c3e50;
+            text-align: center;
+            font-weight: 700;
+            border-bottom: 3px solid #2980b9;
+            padding-bottom: 1rem;
+        }
+
+        .slide h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: #34495e;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .slide h3 {
+            font-size: 1.4rem;
+            margin: 1.5rem 0 1rem 0;
+            color: #2c3e50;
+            font-weight: 600;
+            border-left: 4px solid #2980b9;
+            padding-left: 1rem;
+        }
+
+        .slide h4 {
+            font-size: 1.2rem;
+            margin: 1rem 0 0.5rem 0;
+            color: #34495e;
+            font-weight: 600;
+        }
+
+        .slide p {
+            font-size: 1.1rem;
+            margin-bottom: 1.2rem;
+            color: #2c3e50;
+            text-align: justify;
+            line-height: 1.8;
+        }
+
+        .slide ul, .slide ol {
+            margin: 1rem 0 1.5rem 2rem;
+        }
+
+        .slide li {
+            font-size: 1.1rem;
+            margin-bottom: 0.8rem;
+            color: #2c3e50;
+            line-height: 1.7;
+        }
+
+        /* Abstract and Keywords */
+        .abstract {
+            background: #f8f9fa;
+            border-left: 4px solid #2980b9;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 4px;
+        }
+
+        .abstract h4 {
+            color: #2980b9;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .keywords {
+            background: #ecf0f1;
+            padding: 1rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+            font-style: italic;
+        }
+
+        /* Circuit Diagram Placeholder */
+        .circuit-diagram {
+            width: 100%;
+            max-width: 600px;
+            height: 300px;
+            background: #f8f9fa;
+            border: 2px dashed #95a5a6;
+            margin: 2rem auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            color: #7f8c8d;
+            border-radius: 4px;
+        }
+
+        /* Tables */
+        .materials-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background: white;
+        }
+
+        .materials-table th,
+        .materials-table td {
+            border: 1px solid #bdc3c7;
+            padding: 1rem;
+            text-align: left;
+        }
+
+        .materials-table th {
+            background: #34495e;
+            color: white;
+            font-weight: 600;
+        }
+
+        .materials-table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        /* Equations */
+        .equation {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            text-align: center;
+            border-radius: 4px;
+            border: 1px solid #e0e0e0;
+            font-family: 'Courier New', monospace;
+            font-size: 1.2rem;
+        }
+
+        /* Figure captions */
+        .figure-caption {
+            text-align: center;
+            font-style: italic;
+            color: #7f8c8d;
+            margin-top: 0.5rem;
+            font-size: 1rem;
+        }
+
+        /* Navigation Arrows */
+        .nav-arrow {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            background: white;
+            border: 2px solid #2980b9;
+            color: #2980b9;
+            padding: 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 100;
+            font-size: 1.2rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-arrow:hover {
+            background: #2980b9;
+            color: white;
+            transform: translateY(-50%) scale(1.05);
+        }
+
+        .nav-arrow.prev {
+            left: 2rem;
+        }
+
+        .nav-arrow.next {
+            right: 2rem;
+        }
+
+        /* Slide Indicators */
+        .slide-indicators {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 0.5rem;
+            z-index: 100;
+        }
+
+        .indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #bdc3c7;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid white;
+        }
+
+        .indicator.active {
+            background: #2980b9;
+            transform: scale(1.3);
+        }
+
+        /* References */
+        .references {
+            background: #f8f9fa;
+            padding: 2rem;
+            margin: 2rem 0;
+            border-radius: 4px;
+            border-left: 4px solid #2980b9;
+        }
+
+        .references h4 {
+            color: #2980b9;
+            margin-bottom: 1rem;
+        }
+
+        .references ol {
+            margin-left: 1rem;
+        }
+
+        .references li {
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .slide-content {
+                padding: 2rem 1.5rem;
+                margin: 0 1rem;
+            }
+            
+            .slide h1 { font-size: 2rem; }
+            .slide h2 { font-size: 1.6rem; }
+            .slide h3 { font-size: 1.3rem; }
+            .slide p, .slide li { font-size: 1rem; }
+            .nav-menu { display: none; }
+            .nav-arrow { padding: 0.8rem; font-size: 1rem; }
+            
+            .materials-table {
+                font-size: 0.9rem;
+            }
+            
+            .materials-table th,
+            .materials-table td {
+                padding: 0.5rem;
+            }
+        }
+
+        /* Author info */
+        .author-info {
+            text-align: center;
+            margin: 2rem 0;
+            padding: 1rem;
+            background: #ecf0f1;
+            border-radius: 4px;
+        }
+
+        .author-info h4 {
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+        }
+
+        .author-info p {
+            margin: 0.5rem 0;
+            font-size: 1rem;
+        }
+
+        /* Section numbering */
+        .section-number {
+            color: #2980b9;
+            font-weight: 700;
+            margin-right: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">Research Paper: Wireless Power Transfer</div>
+            <ul class="nav-menu">
+                <li class="nav-item active" data-slide="0">Abstract</li>
+                <li class="nav-item" data-slide="1">Introduction</li>
+                <li class="nav-item" data-slide="2">Theory</li>
+                <li class="nav-item" data-slide="3">Materials</li>
+                <li class="nav-item" data-slide="4">Results</li>
+                <li class="nav-item" data-slide="5">Conclusion</li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Slide Container -->
+    <div class="slide-container">
+        <!-- Slide 1: Title and Abstract -->
+        <div class="slide active">
+            <div class="slide-content">
+                <h1>Wireless Power Transfer Arc Reactor: A Demonstration of Contactless Energy Transmission</h1>
+                
+                <div class="author-info">
+                    <h4>Research Project</h4>
+                    <p>Students of Grade 9 (I) DAV Bakhri</p>
+                    <p>Research by Goswami A.R.</p>
+                </div>
+
+                <div class="abstract">
+                    <h4>Abstract</h4>
+                    <p>This research project demonstrates the fundamental principle of wireless power transfer (WPT), drawing creative inspiration from the Arc Reactor concept. WPT is a transformative technology that enables the transmission of electrical energy without physical wires or direct contact. This project successfully constructs a functional working model that wirelessly illuminates an LED using electromagnetic induction principles, integrated into an aesthetically pleasing Arc Reactor-inspired design.</p>
+                </div>
+
+                <div class="keywords">
+                    <strong>Keywords:</strong> Wireless Power Transfer, Electromagnetic Induction, Arc Reactor, Contactless Energy, Faraday's Law, Resonant Coupling
+                </div>
+
+                <h3><span class="section-number">1.</span>Objective</h3>
+                <p>The primary aim of this project is to design and construct a functional working model that can wirelessly illuminate an LED or small bulb utilizing electromagnetic induction principles. A key creative objective is to integrate this core WPT technology into an aesthetically pleasing Arc Reactor-inspired design, making the demonstration both educational and engaging.</p>
+            </div>
+        </div>
+
+        <!-- Slide 2: Introduction & Problem Statement -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2><span class="section-number">2.</span>Introduction & Problem Statement</h2>
+                
+                <h3><span class="section-number">2.1</span>Background</h3>
+                <p>Traditional methods of electrical power transmission heavily rely on physical wires and direct electrical contacts. This dependency often leads to several drawbacks, including inconvenience (tangled cables, limited mobility), potential safety hazards (exposed wires, electrocution risks), and restricted device usage to areas with accessible power outlets.</p>
+
+                <h3><span class="section-number">2.2</span>Problem Statement</h3>
+                <p>The limitations of wired power transmission create significant challenges in modern electronic device usage. Wireless Power Transfer technology offers a compelling solution by eliminating these physical constraints, thereby enabling safer, more convenient, and significantly more flexible energy transfer across various applications and environments.</p>
+
+                <h3><span class="section-number">2.3</span>Solution Approach</h3>
+                <p>This project addresses these challenges by implementing a wireless power transfer system based on electromagnetic induction, creatively packaged in an Arc Reactor-inspired design that demonstrates the feasibility and potential of contactless energy transmission.</p>
+            </div>
+        </div>
+
+        <!-- Slide 3: Theory & Concept -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2><span class="section-number">3.</span>Theory & Fundamental Concepts</h2>
+                
+                <h3><span class="section-number">3.1</span>Electromagnetic Induction</h3>
+                <p>The core principle governing this project is electromagnetic induction, described by Faraday's Law of Induction. This law states that a changing magnetic field through a coil of wire will induce an electromotive force (EMF), or voltage, in that coil.</p>
+
+                <div class="equation">
+                    ε = -N × (dΦ/dt)
+                    <div class="figure-caption">Faraday's Law: ε = induced EMF, N = number of turns, dΦ/dt = rate of change of magnetic flux</div>
+                </div>
+
+                <h3><span class="section-number">3.2</span>Historical Context</h3>
+                <p>The concept of wireless energy transmission was famously explored by Nikola Tesla in the late 19th and early 20th centuries, particularly with his work on Tesla coils demonstrating resonant inductive coupling. Tesla envisioned a world powered wirelessly, which forms the conceptual foundation for modern WPT applications.</p>
+
+                <h3><span class="section-number">3.3</span>Modern Applications</h3>
+                <ul>
+                    <li><strong>Wireless Charging Pads:</strong> Smartphones, smartwatches (Qi standard)</li>
+                    <li><strong>Electric Vehicles:</strong> Stationary and dynamic charging systems</li>
+                    <li><strong>Medical Implants:</strong> Powering devices without invasive battery replacement</li>
+                    <li><strong>Industrial Applications:</strong> Powering sensors in harsh environments</li>
+                </ul>
+
+                <h3><span class="section-number">3.4</span>Project Implementation</h3>
+                <p>Our project leverages electromagnetic induction through two main components: a transmitter coil (primary) and a receiver coil (secondary). The transmitter creates an oscillating magnetic field by rapidly switching DC current, which induces voltage in the receiver coil according to Faraday's Law.</p>
+            </div>
+        </div>
+
+        <!-- Slide 4: Materials & Methodology -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2><span class="section-number">4.</span>Materials & Methodology</h2>
+                
+                <h3><span class="section-number">4.1</span>Materials List</h3>
+                <table class="materials-table">
+                    <thead>
+                        <tr>
+                            <th>Category</th>
+                            <th>Component</th>
+                            <th>Specification</th>
+                            <th>Purpose</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td rowspan="6">Electronic</td>
+                            <td>DC Battery</td>
+                            <td>9V</td>
+                            <td>Primary power source</td>
+                        </tr>
+                        <tr>
+                            <td>Solar Panel</td>
+                            <td>9V, 100-200mA</td>
+                            <td>Renewable energy input</td>
+                        </tr>
+                        <tr>
+                            <td>Copper Wire (Primary)</td>
+                            <td>18-22 AWG</td>
+                            <td>Transmitter coil winding</td>
+                        </tr>
+                        <tr>
+                            <td>Copper Wire (Secondary)</td>
+                            <td>28-32 AWG, enameled</td>
+                            <td>Receiver coil winding</td>
+                        </tr>
+                        <tr>
+                            <td>NPN Transistor</td>
+                            <td>2N2222, BC547</td>
+                            <td>Current switching</td>
+                        </tr>
+                        <tr>
+                            <td>Resistor</td>
+                            <td>1kΩ - 10kΩ</td>
+                            <td>Base current limiting</td>
+                        </tr>
+                        <tr>
+                            <td rowspan="4">Construction</td>
+                            <td>Cardboard</td>
+                            <td>Various thickness</td>
+                            <td>Structural housing</td>
+                        </tr>
+                        <tr>
+                            <td>Aluminum Foil</td>
+                            <td>Standard</td>
+                            <td>Aesthetic enhancement</td>
+                        </tr>
+                        <tr>
+                            <td>Clear Plastic</td>
+                            <td>Transparent sheet</td>
+                            <td>Protective cover</td>
+                        </tr>
+                        <tr>
+                            <td>LED</td>
+                            <td>Standard 3mm/5mm</td>
+                            <td>Visual indicator</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3><span class="section-number">4.2</span>Circuit Design</h3>
+                <div class="circuit-diagram">
+                    [Circuit Diagram Placeholder]<br>
+                    Transmitter-Receiver Coil Configuration
+                </div>
+                <div class="figure-caption">Figure 1: Schematic representation of the WPT circuit with transmitter and receiver coils</div>
+            </div>
+        </div>
+
+        <!-- Slide 5: Results & Analysis -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2><span class="section-number">5.</span>Results & Analysis</h2>
+                
+                <h3><span class="section-number">5.1</span>Construction Results</h3>
+                <p>The Arc Reactor structure was successfully constructed using cardboard as the primary material, with aluminum foil providing metallic aesthetics and a clear plastic cover allowing visibility of internal components. The electronic components were securely mounted within the central cavity, with neat wiring arrangement ensuring reliable connections.</p>
+
+                <h3><span class="section-number">5.2</span>Performance Demonstration</h3>
+                <p>During testing, the Arc Reactor unit, powered by the 9V battery and supplemented by the solar panel under adequate lighting, successfully demonstrated wireless power transfer. When the receiver coil with attached LED was brought near the transmitter, the LED illuminated instantly without physical contact.</p>
+
+                <h3><span class="section-number">5.3</span>Operational Range Analysis</h3>
+                <p>The system demonstrated effective operation within a specific proximity range:</p>
+                <ul>
+                    <li><strong>Optimal Range:</strong> 0-2 cm (maximum LED brightness)</li>
+                    <li><strong>Effective Range:</strong> 2-5 cm (visible but dimmer illumination)</li>
+                    <li><strong>Cutoff Range:</strong> >5 cm (insufficient coupling for LED operation)</li>
+                </ul>
+
+                <h3><span class="section-number">5.4</span>Efficiency Considerations</h3>
+                <p>The power transfer efficiency was observed to have an inverse relationship with distance, consistent with electromagnetic induction principles. The demonstration clearly illustrated the current limitations and potential of wireless power transfer technology.</p>
+
+                <h3><span class="section-number">5.5</span>Solar Integration</h3>
+                <p>The integrated solar panel successfully provided supplementary power during daylight conditions, demonstrating the feasibility of renewable energy integration in wireless power systems.</p>
+            </div>
+        </div>
+
+        <!-- Slide 6: Conclusion & Future Work -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2><span class="section-number">6.</span>Conclusion & Future Scope</h2>
+                
+                <h3><span class="section-number">6.1</span>Project Achievements</h3>
+                <p>This project successfully demonstrated the fundamental principle of wireless power transfer through electromagnetic induction. The creative integration of the technology into an Arc Reactor-inspired design enhanced both the educational value and aesthetic appeal of the demonstration.</p>
+                
+                <p>Key accomplishments include:</p>
+                <ul>
+                    <li>Successful wireless LED illumination using electromagnetic induction</li>
+                    <li>Integration of renewable energy through solar panel supplementation</li>
+                    <li>Creative and engaging Arc Reactor aesthetic design</li>
+                    <li>Educational demonstration of WPT principles</li>
+                </ul>
+
+                <h3><span class="section-number">6.2</span>Future Innovations</h3>
+                <p>Future iterations could incorporate significant enhancements:</p>
+                
+                <h4>Artificial Intelligence Integration</h4>
+                <ul>
+                    <li>Sensor-based automatic device detection and charging activation</li>
+                    <li>Voice command processing for intuitive user interaction</li>
+                    <li>Smart power optimization based on device requirements</li>
+                    <li>Integration with smart home ecosystems</li>
+                </ul>
+
+                <h4>Technical Improvements</h4>
+                <ul>
+                    <li>Enhanced power transfer efficiency and range</li>
+                    <li>Multi-device simultaneous charging capability</li>
+                    <li>Advanced energy harvesting techniques</li>
+                    <li>Improved coil design for better coupling</li>
+                </ul>
+
+                <h3><span class="section-number">6.3</span>Broader Implications</h3>
+                <p>This research contributes to the growing field of wireless power transfer technology, with applications spanning from consumer electronics to medical devices and electric vehicle charging. The demonstrated principles lay the groundwork for more advanced, efficient, and user-friendly wireless power systems.</p>
+
+                <div class="references">
+                    <h4>References</h4>
+                    <ol>
+                        <li>Faraday, M. (1831). "Experimental Researches in Electricity." Philosophical Transactions of the Royal Society.</li>
+                        <li>Tesla, N. (1899). "The Transmission of Electrical Energy Without Wires." Electrical World and Engineer.</li>
+                        <li>Wireless Power Consortium. (2020). "Qi Wireless Power Transfer System Power Class 0 Specification."</li>
+                        <li>Liu, et al. (2024). "Advancements and challenges in wireless power transfer: A comprehensive review." Nexus Journal.</li>
+                        <li>Kurs, A., et al. (2007). "Wireless Power Transfer via Strongly Coupled Magnetic Resonances." Science, 317(5834), 83-86.</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation Arrows -->
+    <button class="nav-arrow prev" onclick="changeSlide(-1)">‹</button>
+    <button class="nav-arrow next" onclick="changeSlide(1)">›</button>
+
+    <!-- Slide Indicators -->
+    <div class="slide-indicators">
+        <div class="indicator active" data-slide="0"></div>
+        <div class="indicator" data-slide="1"></div>
+        <div class="indicator" data-slide="2"></div>
+        <div class="indicator" data-slide="3"></div>
+        <div class="indicator" data-slide="4"></div>
+        <div class="indicator" data-slide="5"></div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const totalSlides = 6;
+        const slides = document.querySelectorAll('.slide');
+        const indicators = document.querySelectorAll('.indicator');
+        const navItems = document.querySelectorAll('.nav-item');
+
+        // Change slide function
+        function changeSlide(direction) {
+            const newSlide = currentSlide + direction;
+            
+            if (newSlide >= 0 && newSlide < totalSlides) {
+                goToSlide(newSlide);
+            }
+        }
+
+        // Go to specific slide
+        function goToSlide(slideIndex) {
+            // Update current slide
+            slides[currentSlide].classList.remove('active');
+            slides[currentSlide].classList.add(slideIndex > currentSlide ? 'prev' : 'next');
+            
+            currentSlide = slideIndex;
+            
+            // Activate new slide
+            slides[currentSlide].classList.remove('prev', 'next');
+            slides[currentSlide].classList.add('active');
+            
+            // Update indicators
+            indicators.forEach((indicator, index) => {
+                indicator.classList.toggle('active', index === currentSlide);
+            });
+            
+            // Update navigation items
+            navItems.forEach((item, index) => {
+                item.classList.toggle('active', index === currentSlide);
+            });
+            
+            // Clean up classes after transition
+            setTimeout(() => {
+                slides.forEach(slide => {
+                    if (!slide.classList.contains('active')) {
+                        slide.classList.remove('prev', 'next');
+                    }
+                });
+            }, 600);
+        }
+
+        // Add event listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            // Indicator clicks
+            indicators.forEach((indicator, index) => {
+                indicator.addEventListener('click', () => goToSlide(index));
+            });
+            
+            // Navigation menu clicks
+            navItems.forEach((item, index) => {
+                item.addEventListener('click', () => goToSlide(index));
+            });
+            
+            // Keyboard navigation
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowLeft') changeSlide(-1);
+                if (e.key === 'ArrowRight') changeSlide(1);
+            });
+            
+            // Touch/swipe support
+            let startX = 0;
+            let startY = 0;
+            
+            document.addEventListener('touchstart', (e) => {
+                startX = e.touches[0].clientX;
+                startY = e.touches[0].clientY;
+            });
+            
+            document.addEventListener('touchend', (e) => {
+                const endX = e.changedTouches[0].clientX;
+                const endY = e.changedTouches[0].clientY;
+                const diffX = startX - endX;
+                const diffY = startY - endY;
+                
+                // Check if horizontal swipe is greater than vertical
+                if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 50) {
+                    if (diffX > 0) {
+                        changeSlide(1); // Swipe left - next slide
+                    } else {
+                        changeSlide(-1); // Swipe right - previous slide
+                    }
+                }
+            }); 
+        });
+    </script>
+</body>
+</html>
