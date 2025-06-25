@@ -1,0 +1,173 @@
+let currentSlide = 0;
+const totalSlides = 6;
+const slides = document.querySelectorAll('.slide');
+const indicators = document.querySelectorAll('.indicator');
+const navItems = document.querySelectorAll('.nav-item');
+const downloadPdfButton = document.getElementById('downloadPdfButton');
+
+// Change slide function
+function changeSlide(direction) {
+    const newSlide = currentSlide + direction;
+    
+    if (newSlide >= 0 && newSlide < totalSlides) {
+        goToSlide(newSlide);
+    }
+}
+
+// Go to specific slide
+function goToSlide(slideIndex) {
+    // Update current slide
+    slides[currentSlide].classList.remove('active');
+    slides[currentSlide].classList.add(slideIndex > currentSlide ? 'prev' : 'next');
+    
+    currentSlide = slideIndex;
+    
+    // Activate new slide
+    slides[currentSlide].classList.remove('prev', 'next');
+    slides[currentSlide].classList.add('active');
+    
+    // Update indicators
+    indicators.forEach((indicator, index) => {
+        indicator.classList.toggle('active', index === currentSlide);
+    });
+    
+    // Update navigation items
+    navItems.forEach((item, index) => {
+        item.classList.toggle('active', index === currentSlide);
+    });
+    
+    // Clean up classes after transition
+    setTimeout(() => {
+        slides.forEach(slide => {
+            if (!slide.classList.contains('active')) {
+                slide.classList.remove('prev', 'next');
+            }
+        });
+    }, 600);
+}
+
+// Function to download current slide as PDF
+async function downloadCurrentSlideAsPdf() {
+    const currentSlideElement = slides[currentSlide];
+    const slideContent = currentSlideElement.querySelector('.slide-content');
+
+    if (!slideContent) {
+        console.error("No .slide-content found in the active slide.");
+        return;
+    }
+
+    // Temporarily adjust styles for better PDF rendering if needed
+    // For example, you might want to increase width or adjust font sizes for PDF
+    // It's often better to create a print-specific CSS or apply temporary inline styles.
+    const originalStyles = {
+        maxWidth: slideContent.style.maxWidth,
+        padding: slideContent.style.padding,
+        boxShadow: slideContent.style.boxShadow,
+        border: slideContent.style.border
+    };
+
+    slideContent.style.maxWidth = 'none'; // Allow content to take full width for rendering
+    slideContent.style.padding = '1rem'; // Adjust padding for PDF if necessary
+    slideContent.style.boxShadow = 'none'; // Remove box shadow for cleaner PDF
+    slideContent.style.border = 'none'; // Remove border for cleaner PDF
+
+
+    try {
+        const canvas = await html2canvas(slideContent, {
+            scale: 2, // Increase scale for better resolution in PDF
+            useCORS: true, // Important if you have external images
+            logging: true,
+            windowWidth: slideContent.scrollWidth,
+            windowHeight: slideContent.scrollHeight
+        });
+
+        // Restore original styles
+        for (const style in originalStyles) {
+            slideContent.style[style] = originalStyles[style];
+        }
+
+        const imgData = canvas.toDataURL('image/png');
+        const { jsPDF } = window.jspdf;
+        const pdf = new jsPDF({
+            orientation: 'p',
+            unit: 'mm',
+            format: 'a4'
+        });
+
+        const imgWidth = 210; // A4 width in mm
+        const pageHeight = 297; // A4 height in mm
+        const imgHeight = canvas.height * imgWidth / canvas.width;
+        let heightLeft = imgHeight;
+
+        let position = 0;
+
+        pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+        heightLeft -= pageHeight;
+
+        while (heightLeft >= 0) {
+            position = heightLeft - imgHeight;
+            pdf.addPage();
+            pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+            heightLeft -= pageHeight;
+        }
+
+        const slideTitle = currentSlideElement.querySelector('h1, h2, h3')?.innerText || 'Slide';
+        pdf.save(`${slideTitle.replace(/[^a-zA-Z0-9 ]/g, '')}.pdf`);
+
+    } catch (error) {
+        console.error("Error generating PDF:", error);
+        // Ensure original styles are restored even on error
+        for (const style in originalStyles) {
+            slideContent.style[style] = originalStyles[style];
+        }
+        alert("Failed to generate PDF. Please try again.");
+    }
+}
+
+
+// Add event listeners
+document.addEventListener('DOMContentLoaded', function() {
+    // Indicator clicks
+    indicators.forEach((indicator, index) => {
+        indicator.addEventListener('click', () => goToSlide(index));
+    });
+    
+    // Navigation menu clicks
+    navItems.forEach((item, index) => {
+        item.addEventListener('click', () => goToSlide(index));
+    });
+    
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft') changeSlide(-1);
+        if (e.key === 'ArrowRight') changeSlide(1);
+    });
+    
+    // Touch/swipe support
+    let startX = 0;
+    let startY = 0;
+    
+    document.addEventListener('touchstart', (e) => {
+        startX = e.touches[0].clientX;
+        startY = e.touches[0].clientY;
+    });
+    
+    document.addEventListener('touchend', (e) => {
+        const endX = e.changedTouches[0].clientX;
+        const endY = e.changedTouches[0].clientY;
+        const diffX = startX - endX;
+        const diffY = startY - endY;
+        
+        // Check if horizontal swipe is greater than vertical
+        if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 50) {
+            if (diffX > 0) {
+                changeSlide(1); // Swipe left - next slide
+            } else {
+                changeSlide(-1); // Swipe right - previous slide
+            }
+        }
+    }); 
+
+    // Download PDF button click
+    downloadPdfButton.addEventListener('click', downloadCurrentSlideAsPdf);
+});
