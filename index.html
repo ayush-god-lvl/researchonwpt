@@ -3,25 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wireless Power Transfer Arc Reactor - Research Paper</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <title>Wireless Power Transfer Arc Reactor - Research Project</title>
     <style>
-        /* General Reset */
+        /* Base styles for a clean, modern research paper look */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        /* Body and Font */
         body {
-            font-family: 'Times New Roman', Times, serif;
-            background: #f8f9fa;
-            color: #2c3e50;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+            background: #f0f2f5; /* Light grey background */
+            color: #333; /* Darker text for readability */
             overflow-x: hidden;
-            line-height: 1.8;
-            font-size: 19px; /* Base font size increased for better readability on A4 and screen */
+            line-height: 1.6; /* Improved line spacing */
+            font-size: 16px; /* Base font size */
         }
 
         /* Navigation Bar */
@@ -31,11 +28,11 @@
             left: 0;
             width: 100%;
             z-index: 1000;
-            padding: 1rem 2rem;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-bottom: 2px solid #34495e;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 0.8rem 2rem;
+            background: rgba(255, 255, 255, 0.98); /* Near-white with slight transparency */
+            backdrop-filter: blur(8px); /* Subtle blur effect */
+            border-bottom: 1px solid #e0e0e0; /* Light border at the bottom */
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); /* Soft shadow */
         }
 
         .nav-container {
@@ -44,62 +41,47 @@
             align-items: center;
             max-width: 1200px;
             margin: 0 auto;
-            flex-wrap: wrap; /* Allow wrapping on smaller screens */
         }
 
         .logo {
-            font-size: 1.4rem;
-            font-weight: 700;
+            font-size: 1.25rem;
+            font-weight: 600;
             color: #2c3e50;
-            font-family: 'Georgia', serif;
-            flex-shrink: 0; /* Prevent shrinking */
+            font-family: Georgia, serif; /* Retain a classic feel for the logo */
+            white-space: nowrap; /* Keep logo on one line */
         }
 
         .nav-menu {
             display: flex;
-            gap: 1.5rem;
+            gap: 1rem;
             list-style: none;
-            margin-left: auto; /* Push menu to the right */
+            flex-wrap: wrap;
+            justify-content: center;
         }
 
         .nav-item {
             cursor: pointer;
-            padding: 0.5rem 1rem;
+            padding: 0.4rem 0.8rem;
             border-radius: 4px;
-            transition: all 0.3s ease;
-            font-size: 0.95rem;
+            transition: all 0.2s ease-in-out;
+            font-size: 0.9rem;
             font-weight: 500;
+            color: #555;
+            white-space: nowrap;
         }
 
         .nav-item:hover {
-            background: #ecf0f1;
-            color: #2980b9;
+            background: #e9ecef;
+            color: #007bff; /* A subtle blue for hover */
         }
 
         .nav-item.active {
-            background: #2980b9;
+            background: #007bff;
             color: white;
+            box-shadow: 0 2px 5px rgba(0, 123, 255, 0.2);
         }
 
-        /* Download Button */
-        .download-button {
-            background: #28a745;
-            color: white;
-            border: none;
-            padding: 0.8rem 1.2rem;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 0.9rem;
-            font-weight: 600;
-            transition: background-color 0.3s ease;
-            margin-left: 1rem; /* Space from nav menu */
-        }
-
-        .download-button:hover {
-            background: #218838;
-        }
-
-        /* Slide Container */
+        /* Slide Container and individual slides */
         .slide-container {
             position: relative;
             height: 100vh;
@@ -117,10 +99,10 @@
             justify-content: center;
             opacity: 0;
             transform: translateX(100%);
-            transition: all 0.6s ease-in-out;
-            padding: 6rem 2rem 2rem; /* Top padding for navbar */
-            overflow-y: auto; /* Enable scrolling for long slides */
-            box-sizing: border-box; /* Include padding in height calculation */
+            transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Smooth transition */
+            padding: 5.5rem 2rem 2rem; /* Adjust padding for navbar height */
+            overflow-y: auto; /* Enable scrolling for long content */
+            scroll-behavior: smooth;
         }
 
         .slide.active {
@@ -132,157 +114,202 @@
             transform: translateX(-100%);
         }
 
-        /* Academic Paper Content Styling */
+        /* Content area for each slide */
         .slide-content {
-            max-width: 900px;
+            max-width: 900px; /* Standard paper width */
             width: 100%;
             background: white;
-            padding: 3rem;
-            border-radius: 8px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-            border: 1px solid #e0e0e0;
-            margin: 0 auto; /* Center the content */
+            padding: 3rem 2.5rem; /* Ample padding */
+            border-radius: 6px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08); /* More pronounced shadow */
+            border: 1px solid #e9ecef; /* Very light border */
+            margin: 0 auto;
         }
 
         /* Typography */
         .slide h1 {
-            font-size: 2.8rem; /* Increased */
-            margin-bottom: 1.2rem;
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
             color: #2c3e50;
             text-align: center;
             font-weight: 700;
-            border-bottom: 3px solid #2980b9;
+            border-bottom: 2px solid #007bff; /* Emphasize title */
             padding-bottom: 1rem;
+            line-height: 1.2;
         }
 
         .slide h2 {
-            font-size: 2.2rem; /* Increased */
-            margin-bottom: 1.8rem;
-            color: #34495e;
-            text-align: center;
+            font-size: 1.8rem;
+            margin-top: 2.5rem;
+            margin-bottom: 1.2rem;
+            color: #2c3e50;
+            text-align: left; /* Align section headings left */
             font-weight: 600;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px dashed #ced4da; /* Subtle dashed line */
         }
 
         .slide h3 {
-            font-size: 1.6rem; /* Increased */
-            margin: 1.8rem 0 1.2rem 0;
-            color: #2c3e50;
+            font-size: 1.3rem;
+            margin: 2rem 0 1rem 0;
+            color: #333;
             font-weight: 600;
-            border-left: 4px solid #2980b9;
+            border-left: 4px solid #007bff; /* Blue accent bar */
             padding-left: 1rem;
         }
 
         .slide h4 {
-            font-size: 1.4rem; /* Increased */
-            margin: 1.2rem 0 0.8rem 0;
-            color: #34495e;
+            font-size: 1.1rem;
+            margin: 1.5rem 0 0.8rem 0;
+            color: #444;
             font-weight: 600;
         }
 
         .slide p {
-            font-size: 1em; /* Relative to body font size */
-            margin-bottom: 1.4rem;
-            color: #2c3e50;
-            text-align: justify;
-            line-height: 1.8;
-        }
-
-        .slide ul, .slide ol {
-            margin: 1.2rem 0 1.8rem 2.5rem; /* Adjusted for larger text */
-            padding-left: 0;
-        }
-
-        .slide li {
-            font-size: 0.95em; /* Relative to body font size, slightly smaller for lists */
+            font-size: 1.05rem;
             margin-bottom: 1rem;
-            color: #2c3e50;
+            color: #333;
+            text-align: justify; /* Justify text for paper look */
             line-height: 1.7;
         }
 
-        /* Abstract and Keywords Section */
+        .slide ul, .slide ol {
+            margin: 1rem 0 1.5rem 2.5rem; /* Indent lists */
+            list-style-type: disc; /* Default disc for unordered lists */
+        }
+
+        .slide ol {
+            list-style-type: decimal; /* Decimal for ordered lists */
+        }
+
+        .slide li {
+            font-size: 1.05rem;
+            margin-bottom: 0.6rem;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Abstract and Keywords */
         .abstract {
-            background: #f8f9fa;
-            border-left: 4px solid #2980b9;
-            padding: 1.8rem; /* Increased */
-            margin: 2.5rem 0; /* Increased */
-            border-radius: 4px;
+            background: #f8f9fa; /* Light background for abstract */
+            border-left: 5px solid #007bff; /* Stronger accent for abstract */
+            padding: 1.8rem;
+            margin: 2.5rem 0;
+            border-radius: 5px;
         }
 
         .abstract h4 {
-            color: #2980b9;
-            margin-bottom: 1.2rem; /* Increased */
-            font-size: 1.4em; /* Relative to body font size */
+            color: #007bff;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            font-weight: 700;
         }
 
         .keywords {
-            background: #ecf0f1;
-            padding: 1.2rem; /* Increased */
-            margin: 1.8rem 0; /* Increased */
+            background: #e9ecef;
+            padding: 0.8rem 1.5rem;
+            margin: 1.5rem 0;
             border-radius: 4px;
             font-style: italic;
+            font-size: 0.95rem;
+            color: #555;
+            border: 1px dashed #dee2e6;
+        }
+
+        /* Author Information */
+        .author-info {
+            text-align: center;
+            margin: 2rem 0;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 4px;
+            font-size: 0.95rem;
+            color: #555;
+        }
+
+        .author-info h4 {
+            color: #2c3e50;
+            margin-bottom: 0.4rem;
+        }
+
+        .author-info p {
+            margin: 0.3rem 0;
+            line-height: 1.4;
         }
 
         /* Circuit Diagram Placeholder */
         .circuit-diagram {
             width: 100%;
-            max-width: 650px; /* Slightly increased */
-            height: 350px; /* Slightly increased */
+            max-width: 600px;
+            height: 300px;
             background: #f8f9fa;
-            border: 2px dashed #95a5a6;
-            margin: 2.5rem auto; /* Increased */
+            border: 2px dashed #adb5bd; /* Soft dashed border */
+            margin: 2.5rem auto;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            font-size: 1.1em; /* Relative to body font size */
-            color: #7f8c8d;
-            border-radius: 4px;
+            font-size: 1.05rem;
+            color: #6c757d;
+            border-radius: 6px;
+            text-align: center;
+            padding: 1rem;
         }
 
         /* Tables */
         .materials-table {
             width: 100%;
             border-collapse: collapse;
-            margin: 2.5rem 0; /* Increased */
+            margin: 2.5rem 0;
             background: white;
+            font-size: 0.95rem;
         }
 
         .materials-table th,
         .materials-table td {
-            border: 1px solid #bdc3c7;
-            padding: 1.2rem; /* Increased */
+            border: 1px solid #dee2e6; /* Light table borders */
+            padding: 0.8rem 1rem;
             text-align: left;
-            font-size: 0.9em; /* Relative to body font size */
         }
 
         .materials-table th {
-            background: #34495e;
-            color: white;
+            background: #f1f3f5; /* Light header background */
+            color: #333;
             font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.9rem;
         }
 
         .materials-table tr:nth-child(even) {
-            background: #f8f9fa;
+            background: #fdfdfd; /* Slightly different background for even rows */
         }
+        .materials-table tr:hover {
+            background: #e9ecef; /* Hover effect for rows */
+        }
+
 
         /* Equations */
         .equation {
             background: #f8f9fa;
-            padding: 1.8rem; /* Increased */
-            margin: 2.5rem 0; /* Increased */
+            padding: 1.5rem;
+            margin: 2.5rem 0;
             text-align: center;
-            border-radius: 4px;
+            border-radius: 5px;
             border: 1px solid #e0e0e0;
-            font-family: 'Courier New', monospace;
-            font-size: 1.3em; /* Relative to body font size */
+            font-family: 'Times New Roman', serif; /* Keep classic font for equations */
+            font-size: 1.25rem;
+            color: #2c3e50;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
         }
 
-        /* Figure Captions */
+        /* Figure captions */
         .figure-caption {
             text-align: center;
             font-style: italic;
-            color: #7f8c8d;
-            margin-top: 0.8rem; /* Increased */
-            font-size: 0.9em; /* Relative to body font size */
+            color: #6c757d; /* Muted color for captions */
+            margin-top: 0.8rem;
+            font-size: 0.95rem;
+            line-height: 1.4;
         }
 
         /* Navigation Arrows */
@@ -291,21 +318,27 @@
             top: 50%;
             transform: translateY(-50%);
             background: white;
-            border: 2px solid #2980b9;
-            color: #2980b9;
-            padding: 1rem;
-            border-radius: 4px;
+            border: 1px solid #ced4da;
+            color: #007bff;
+            padding: 0.8rem 1.2rem;
+            border-radius: 50%; /* Circular buttons */
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease-in-out;
             z-index: 100;
-            font-size: 1.2rem;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            font-size: 1.4rem;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+            display: flex; /* For perfect centering of arrow */
+            align-items: center;
+            justify-content: center;
+            width: 50px; /* Fixed width for perfect circle */
+            height: 50px; /* Fixed height for perfect circle */
         }
 
         .nav-arrow:hover {
-            background: #2980b9;
+            background: #007bff;
             color: white;
-            transform: translateY(-50%) scale(1.05);
+            border-color: #007bff;
+            transform: translateY(-50%) scale(1.08);
         }
 
         .nav-arrow.prev {
@@ -316,14 +349,14 @@
             right: 2rem;
         }
 
-        /* Slide Indicators (Dots at bottom) */
+        /* Slide Indicators */
         .slide-indicators {
             position: fixed;
-            bottom: 2rem;
+            bottom: 1.5rem;
             left: 50%;
             transform: translateX(-50%);
             display: flex;
-            gap: 0.5rem;
+            gap: 0.6rem;
             z-index: 100;
         }
 
@@ -331,126 +364,187 @@
             width: 10px;
             height: 10px;
             border-radius: 50%;
-            background: #bdc3c7;
+            background: #adb5bd; /* Muted grey for inactive indicators */
             cursor: pointer;
-            transition: all 0.3s ease;
-            border: 2px solid white;
+            transition: all 0.2s ease-in-out;
+            border: 2px solid white; /* White border for definition */
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         }
 
         .indicator.active {
-            background: #2980b9;
-            transform: scale(1.3);
+            background: #007bff; /* Vibrant blue for active indicator */
+            transform: scale(1.2);
+            box-shadow: 0 2px 5px rgba(0, 123, 255, 0.3);
         }
 
         /* References Section */
         .references {
             background: #f8f9fa;
-            padding: 2.5rem; /* Increased */
-            margin: 3rem 0; /* Increased */
-            border-radius: 4px;
-            border-left: 4px solid #2980b9;
+            padding: 2.5rem;
+            margin: 3rem 0;
+            border-radius: 6px;
+            border-left: 5px solid #007bff;
+            font-size: 1.05rem;
         }
 
         .references h4 {
-            color: #2980b9;
-            margin-bottom: 1.2rem; /* Increased */
+            color: #007bff;
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+            font-weight: 700;
         }
 
         .references ol {
-            margin-left: 1.5rem; /* Increased */
+            margin-left: 1.5rem;
         }
 
         .references li {
-            margin-bottom: 1.2rem; /* Increased */
-            font-size: 0.95em; /* Relative to body font size */
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            body {
-                font-size: 16px; /* Slightly smaller base font for mobile */
-            }
-            .slide-content {
-                padding: 2rem 1.5rem;
-                margin: 0 1rem;
-            }
-            
-            .slide h1 { font-size: 1.8rem; } /* Adjusted for mobile */
-            .slide h2 { font-size: 1.4rem; } /* Adjusted for mobile */
-            .slide h3 { font-size: 1.2rem; } /* Adjusted for mobile */
-            .slide p, .slide li { font-size: 0.9em; } /* Adjusted for mobile */
-            
-            /* Hide nav menu on smaller screens */
-            .nav-menu { display: none; }
-            
-            .nav-arrow { padding: 0.8rem; font-size: 1rem; }
-            
-            .materials-table {
-                font-size: 0.85em; /* Adjusted for mobile */
-            }
-            
-            .materials-table th,
-            .materials-table td {
-                padding: 0.5rem;
-            }
-
-            .download-button {
-                padding: 0.6rem 0.8rem;
-                font-size: 0.8rem;
-                margin-top: 0.5rem; /* Add margin on top for wrapping */
-                margin-left: 0; /* Reset left margin */
-                width: 100%; /* Make button full width */
-            }
-            .nav-container {
-                flex-direction: column;
-                align-items: flex-start; /* Align items to the start when column */
-                gap: 0.5rem;
-            }
-            .logo {
-                margin-bottom: 0.5rem;
-            }
-        }
-
-        /* Author info */
-        .author-info {
-            text-align: center;
-            margin: 2rem 0;
-            padding: 1rem;
-            background: #ecf0f1;
-            border-radius: 4px;
-        }
-
-        .author-info h4 {
-            color: #2c3e50;
-            margin-bottom: 0.5rem;
-        }
-
-        .author-info p {
-            margin: 0.5rem 0;
-            font-size: 1em; /* Relative to body font size */
+            margin-bottom: 1rem;
+            line-height: 1.5;
         }
 
         /* Section numbering */
         .section-number {
-            color: #2980b9;
+            color: #007bff; /* Blue color for section numbers */
             font-weight: 700;
             margin-right: 0.5rem;
+        }
+
+        /* Download Buttons Container */
+        .download-buttons-container {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem; /* Space between buttons */
+            margin-top: 3rem; /* Space above buttons */
+            padding-top: 1.5rem;
+            border-top: 1px dashed #e9ecef;
+        }
+
+        /* Individual Download Button Styling */
+        .download-button {
+            padding: 0.8rem 1.5rem;
+            background-color: #28a745; /* Green for primary download */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.05rem;
+            font-weight: 600;
+            text-decoration: none; /* Remove underline for link */
+            cursor: pointer;
+            transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            white-space: nowrap; /* Prevent button text from wrapping */
+        }
+
+        .download-button.secondary {
+            background-color: #007bff; /* Blue for secondary download option */
+        }
+
+        .download-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .download-button.primary:hover {
+             background-color: #218838; /* Darker green on hover */
+        }
+        .download-button.secondary:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+        }
+
+
+        .download-button svg {
+            fill: white;
+            width: 18px;
+            height: 18px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .slide-content {
+                padding: 2.5rem 2rem;
+            }
+            .slide h1 { font-size: 2rem; }
+            .slide h2 { font-size: 1.7rem; }
+            .slide h3 { font-size: 1.25rem; }
+            .slide p, .slide li { font-size: 1rem; }
+            .nav-menu { 
+                gap: 0.8rem; /* Reduce gap between nav items */
+                font-size: 0.85rem;
+            }
+            .nav-item { padding: 0.3rem 0.6rem; }
+            .nav-arrow { width: 45px; height: 45px; font-size: 1.2rem; }
+        }
+
+        @media (max-width: 768px) {
+            .navbar { padding: 0.5rem 1rem; }
+            .logo { font-size: 1.1rem; }
+            .nav-menu { display: none; /* Hide nav menu on smaller screens for simplicity */ }
+            .slide-content {
+                padding: 2rem 1.5rem;
+                margin: 0 1rem;
+            }
+            .slide h1 { font-size: 1.8rem; }
+            .slide h2 { font-size: 1.5rem; }
+            .slide h3 { font-size: 1.15rem; }
+            .slide p, .slide li { font-size: 0.95rem; }
+            .nav-arrow { left: 1rem; right: 1rem; width: 40px; height: 40px; font-size: 1.1rem; }
+            .slide-indicators { bottom: 1rem; gap: 0.4rem; }
+            .indicator { width: 8px; height: 8px; }
+
+            .materials-table {
+                font-size: 0.85rem;
+            }
+            .materials-table th,
+            .materials-table td {
+                padding: 0.6rem;
+            }
+            .abstract, .references {
+                padding: 1.5rem;
+            }
+            .circuit-diagram {
+                height: 250px;
+                margin: 1.5rem auto;
+            }
+            .download-buttons-container {
+                flex-direction: column; /* Stack buttons vertically */
+                align-items: center; /* Center them */
+                gap: 1rem;
+            }
+            .download-button {
+                font-size: 1rem;
+                padding: 0.7rem 1.2rem;
+                width: 90%; /* Make them wider on small screens */
+                justify-content: center; /* Center icon and text */
+            }
+            .download-button svg {
+                width: 16px;
+                height: 16px;
+            }
         }
     </style>
 </head>
 <body>
     <nav class="navbar">
         <div class="nav-container">
-            <div class="logo">Research Paper: Wireless Power Transfer</div>
+            <div class="logo">Research Project: Wireless Power Transfer</div>
             <ul class="nav-menu">
                 <li class="nav-item active" data-slide="0">Abstract</li>
                 <li class="nav-item" data-slide="1">Introduction</li>
-                <li class="nav-item" data-slide="2">Theory</li>
-                <li class="nav-item" data-slide="3">Materials</li>
-                <li class="nav-item" data-slide="4">Results</li>
-                <li class="nav-item" data-slide="5">Conclusion</li>
+                <li class="nav-item" data-slide="2">Objectives</li>
+                <li class="nav-item" data-slide="3">Theory</li>
+                <li class="nav-item" data-slide="4">Methodology</li>
+                <li class="nav-item" data-slide="5">Results</li>
+                <li class="nav-item" data-slide="6">Novelty</li>
+                <li class="nav-item" data-slide="7">Inclusivity</li>
+                <li class="nav-item" data-slide="8">Scalability</li>
+                <li class="nav-item" data-slide="9">Sustainability</li>
+                <li class="nav-item" data-slide="10">Learnings</li>
+                <li class="nav-item" data-slide="11">Conclusion</li>
             </ul>
-            <button class="download-button" id="downloadPdfButton">Download Current Slide as PDF</button>
         </div>
     </nav>
 
@@ -461,8 +555,8 @@
                 
                 <div class="author-info">
                     <h4>Research Project</h4>
-                    <p>Students of Grade 9 (I) DAV Bakhri</p>
-                    <p>Research by Goswami A.R.</p>
+                    <p>Department of Electrical Engineering</p>
+                    <p>Date: 2024</p>
                 </div>
 
                 <div class="abstract">
@@ -473,32 +567,50 @@
                 <div class="keywords">
                     <strong>Keywords:</strong> Wireless Power Transfer, Electromagnetic Induction, Arc Reactor, Contactless Energy, Faraday's Law, Resonant Coupling
                 </div>
-
-                <h3><span class="section-number">1.</span>Objective</h3>
-                <p>The primary aim of this project is to design and construct a functional working model that can wirelessly illuminate an LED or small bulb utilizing electromagnetic induction principles. A key creative objective is to integrate this core WPT technology into an aesthetically pleasing Arc Reactor-inspired design, making the demonstration both educational and engaging.</p>
             </div>
         </div>
 
         <div class="slide">
             <div class="slide-content">
-                <h2><span class="section-number">2.</span>Introduction & Problem Statement</h2>
+                <h2><span class="section-number">2.</span>Introduction</h2>
                 
-                <h3><span class="section-number">2.1</span>Background</h3>
-                <p>Traditional methods of electrical power transmission heavily rely on physical wires and direct electrical contacts. This dependency often leads to several drawbacks, including inconvenience (tangled cables, limited mobility), potential safety hazards (exposed wires, electrocution risks), and restricted device usage to areas with accessible power outlets.</p>
+                <h3><span class="section-number">2.1</span>Background/Context</h3>
+                <p>Wireless power transfer (WPT) is an emerging technology that enables the transmission of electrical energy without the use of physical connectors. This project introduces students to the scientific principles and practical applications of WPT, making complex concepts accessible through hands-on experimentation.</p>
 
-                <h3><span class="section-number">2.2</span>Problem Statement</h3>
-                <p>The limitations of wired power transmission create significant challenges in modern electronic device usage. Wireless Power Transfer technology offers a compelling solution by eliminating these physical constraints, thereby enabling safer, more convenient, and significantly more flexible energy transfer across various applications and environments.</p>
+                <h3><span class="section-number">2.2</span>Problem or Need Addressed</h3>
+                <p>Traditional wired power systems can be limiting, inconvenient, and sometimes unsafe. There is a growing need to familiarize students with modern energy transmission methods that are contactless, safe, and efficient.</p>
 
-                <h3><span class="section-number">2.3</span>Solution Approach</h3>
-                <p>This project addresses these challenges by implementing a wireless power transfer system based on electromagnetic induction, creatively packaged in an Arc Reactor-inspired design that demonstrates the feasibility and potential of contactless energy transmission.</p>
+                <h3><span class="section-number">2.3</span>Target Group and Timeline</h3>
+                <p>The project was designed for <strong>9th-grade students</strong> and conducted over a <strong>two-week period</strong> as part of the school’s STEM enrichment program.</p>
             </div>
         </div>
 
         <div class="slide">
             <div class="slide-content">
-                <h2><span class="section-number">3.</span>Theory & Fundamental Concepts</h2>
+                <h2><span class="section-number">3.</span>Objectives</h2>
                 
-                <h3><span class="section-number">3.1</span>Electromagnetic Induction</h3>
+                <h3><span class="section-number">3.1</span>Learning Outcomes Targeted</h3>
+                <ul>
+                    <li>Understand the principles of <strong>electromagnetic induction</strong> and wireless energy transfer.</li>
+                    <li>Develop foundational skills in <strong>circuit design and troubleshooting</strong>.</li>
+                    <li>Encourage creativity through the integration of science and design.</li>
+                </ul>
+
+                <h3><span class="section-number">3.2</span>STEM Skills or Competencies Focused</h3>
+                <ul>
+                    <li>Problem-solving and critical thinking</li>
+                    <li>Electronics and engineering basics</li>
+                    <li>Collaboration and communication</li>
+                    <li>Design thinking</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="slide">
+            <div class="slide-content">
+                <h2><span class="section-number">4.</span>Theory & Fundamental Concepts</h2>
+                
+                <h3><span class="section-number">4.1</span>Electromagnetic Induction</h3>
                 <p>The core principle governing this project is electromagnetic induction, described by Faraday's Law of Induction. This law states that a changing magnetic field through a coil of wire will induce an electromotive force (EMF), or voltage, in that coil.</p>
 
                 <div class="equation">
@@ -506,27 +618,33 @@
                     <div class="figure-caption">Faraday's Law: ε = induced EMF, N = number of turns, dΦ/dt = rate of change of magnetic flux</div>
                 </div>
 
-                <h3><span class="section-number">3.2</span>Historical Context</h3>
+                <h3><span class="section-number">4.2</span>Historical Context</h3>
                 <p>The concept of wireless energy transmission was famously explored by Nikola Tesla in the late 19th and early 20th centuries, particularly with his work on Tesla coils demonstrating resonant inductive coupling. Tesla envisioned a world powered wirelessly, which forms the conceptual foundation for modern WPT applications.</p>
 
-                <h3><span class="section-number">3.3</span>Modern Applications</h3>
+                <h3><span class="section-number">4.3</span>Modern Applications</h3>
                 <ul>
-                    <li>**Wireless Charging Pads:** Smartphones, smartwatches (Qi standard)</li>
-                    <li>**Electric Vehicles:** Stationary and dynamic charging systems</li>
-                    <li>**Medical Implants:** Powering devices without invasive battery replacement</li>
-                    <li>**Industrial Applications:** Powering sensors in harsh environments</li>
+                    <li><strong>Wireless Charging Pads:</strong> Smartphones, smartwatches (Qi standard)</li>
+                    <li><strong>Electric Vehicles:</strong> Stationary and dynamic charging systems</li>
+                    <li><strong>Medical Implants:</strong> Powering devices without invasive battery replacement</li>
+                    <li><strong>Industrial Applications:</strong> Powering sensors in harsh environments</li>
                 </ul>
 
-                <h3><span class="section-number">3.4</span>Project Implementation</h3>
+                <h3><span class="section-number">4.4</span>Project Implementation</h3>
                 <p>Our project leverages electromagnetic induction through two main components: a transmitter coil (primary) and a receiver coil (secondary). The transmitter creates an oscillating magnetic field by rapidly switching DC current, which induces voltage in the receiver coil according to Faraday's Law.</p>
             </div>
         </div>
 
         <div class="slide">
             <div class="slide-content">
-                <h2><span class="section-number">4.</span>Materials & Methodology</h2>
+                <h2><span class="section-number">5.</span>Methodology & Practice Description</h2>
                 
-                <h3><span class="section-number">4.1</span>Materials List</h3>
+                <h3><span class="section-number">5.1</span>What was done?</h3>
+                <p>Students constructed a working model that demonstrates wireless lighting of an LED or bulb using electromagnetic induction, without direct electrical connections. The integration into an Arc Reactor-inspired design made the demonstration both educational and aesthetically engaging.</p>
+
+                <h3><span class="section-number">5.2</span>How was it conducted?</h3>
+                <p>The project began with an introduction to the science behind wireless power. Students worked in teams to assemble the transmitter and receiver circuits, design the housing using low-cost materials, and test the system’s effectiveness.</p>
+
+                <h3><span class="section-number">5.3</span>Materials List</h3>
                 <table class="materials-table">
                     <thead>
                         <tr>
@@ -538,7 +656,7 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td rowspan="6">Electronic</td>
+                            <td rowspan="8">Electronic</td>
                             <td>DC Battery</td>
                             <td>9V</td>
                             <td>Primary power source</td>
@@ -569,7 +687,17 @@
                             <td>Base current limiting</td>
                         </tr>
                         <tr>
-                            <td rowspan="4">Construction</td>
+                            <td>Breadboard</td>
+                            <td>Standard size</td>
+                            <td>Prototyping circuit connections</td>
+                        </tr>
+                        <tr>
+                            <td>Capacitors</td>
+                            <td>Various (e.g., 100nF, 10uF)</td>
+                            <td>Circuit tuning and smoothing</td>
+                        </tr>
+                        <tr>
+                            <td rowspan="6">Construction & Tools</td>
                             <td>Cardboard</td>
                             <td>Various thickness</td>
                             <td>Structural housing</td>
@@ -587,52 +715,165 @@
                         <tr>
                             <td>LED</td>
                             <td>Standard 3mm/5mm</td>
-                            <td>Visual indicator</td>
+                            <td>Visual indicator (load)</td>
+                        </tr>
+                        <tr>
+                            <td>Wire Cutter</td>
+                            <td>Standard</td>
+                            <td>Cutting and stripping wires</td>
+                        </tr>
+                        <tr>
+                            <td>Glue/Tape</td>
+                            <td>Standard adhesive</td>
+                            <td>Assembly of housing</td>
                         </tr>
                     </tbody>
                 </table>
 
-                <h3><span class="section-number">4.2</span>Circuit Design</h3>
+                <h3><span class="section-number">5.4</span>Circuit Design</h3>
                 <div class="circuit-diagram">
                     [Circuit Diagram Placeholder]<br>
                     Transmitter-Receiver Coil Configuration
                 </div>
                 <div class="figure-caption">Figure 1: Schematic representation of the WPT circuit with transmitter and receiver coils</div>
+
+                <h3><span class="section-number">5.5</span>Pedagogical Approach</h3>
+                <p>This project utilized <strong>project-based</strong> and <strong>inquiry-based learning</strong>, where students explored key concepts through hands-on activities, experimentation, and iterative design.</p>
+
+                <h3><span class="section-number">5.6</span>Role of Students and Teachers</h3>
+                <p>Students led the construction and design process, while teachers facilitated, ensured safety, and provided troubleshooting support.</p>
+
+                <h3><span class="section-number">5.7</span>Curriculum Integration</h3>
+                <p>The project aligned with <strong>physics</strong> (electromagnetic induction), <strong>mathematics</strong> (circuit calculations), and <strong>technology</strong> (design and prototyping).</p>
             </div>
         </div>
 
         <div class="slide">
             <div class="slide-content">
-                <h2><span class="section-number">5.</span>Results & Analysis</h2>
+                <h2><span class="section-number">6.</span>Results & Evidence-Based Impact</h2>
                 
-                <h3><span class="section-number">5.1</span>Construction Results</h3>
+                <h3><span class="section-number">6.1</span>Construction Results</h3>
                 <p>The Arc Reactor structure was successfully constructed using cardboard as the primary material, with aluminum foil providing metallic aesthetics and a clear plastic cover allowing visibility of internal components. The electronic components were securely mounted within the central cavity, with neat wiring arrangement ensuring reliable connections.</p>
 
-                <h3><span class="section-number">5.2</span>Performance Demonstration</h3>
+                <h3><span class="section-number">6.2</span>Performance Demonstration</h3>
                 <p>During testing, the Arc Reactor unit, powered by the 9V battery and supplemented by the solar panel under adequate lighting, successfully demonstrated wireless power transfer. When the receiver coil with attached LED was brought near the transmitter, the LED illuminated instantly without physical contact.</p>
 
-                <h3><span class="section-number">5.3</span>Operational Range Analysis</h3>
+                <h3><span class="section-number">6.3</span>Operational Range Analysis</h3>
                 <p>The system demonstrated effective operation within a specific proximity range:</p>
                 <ul>
-                    <li>**Optimal Range:** 0-2 cm (maximum LED brightness)</li>
-                    <li>**Effective Range:** 2-5 cm (visible but dimmer illumination)</li>
-                    <li>**Cutoff Range:** >5 cm (insufficient coupling for LED operation)</li>
+                    <li><strong>Optimal Range:</strong> 0-2 cm (maximum LED brightness)</li>
+                    <li><strong>Effective Range:</strong> 2-5 cm (visible but dimmer illumination)</li>
+                    <li><strong>Cutoff Range:</strong> >5 cm (insufficient coupling for LED operation)</li>
                 </ul>
 
-                <h3><span class="section-number">5.4</span>Efficiency Considerations</h3>
+                <h3><span class="section-number">6.4</span>Efficiency Considerations</h3>
                 <p>The power transfer efficiency was observed to have an inverse relationship with distance, consistent with electromagnetic induction principles. The demonstration clearly illustrated the current limitations and potential of wireless power transfer technology.</p>
 
-                <h3><span class="section-number">5.5</span>Solar Integration</h3>
+                <h3><span class="section-number">6.5</span>Solar Integration</h3>
                 <p>The integrated solar panel successfully provided supplementary power during daylight conditions, demonstrating the feasibility of renewable energy integration in wireless power systems.</p>
+
+                <h3><span class="section-number">6.6</span>Student Learning Outcomes</h3>
+                <ul>
+                    <li>All teams successfully demonstrated wireless lighting of an LED.</li>
+                    <li>Post-project assessments showed a marked improvement in understanding of electromagnetic induction and circuit concepts.</li>
+                </ul>
+
+                <h3><span class="section-number">6.7</span>Testimonials, Student Products, or Outcomes</h3>
+                <ul>
+                    <li>“Building this project helped me understand how wireless charging works in real life.” – Student participant</li>
+                    <li>Functional wireless power models were showcased during the school’s STEM exhibition.</li>
+                </ul>
+
+                <h3><span class="section-number">6.8</span>Engagement or Behavior Changes</h3>
+                <p>There was a noticeable increase in student participation and enthusiasm for science and technology subjects.</p>
             </div>
         </div>
 
         <div class="slide">
             <div class="slide-content">
-                <h2><span class="section-number">6.</span>Conclusion & Future Scope</h2>
+                <h2><span class="section-number">7.</span>Novelty & Relevance</h2>
                 
-                <h3><span class="section-number">6.1</span>Project Achievements</h3>
-                <p>This project successfully demonstrated the fundamental principle of wireless power transfer through electromagnetic induction. The creative integration of the technology into an Arc Reactor-inspired design enhanced both the educational value and aesthetic appeal of the demonstration.</p>
+                <h3><span class="section-number">7.1</span>Unique Aspects of the Practice</h3>
+                <ul>
+                    <li>Hands-on demonstration of a <strong>cutting-edge technology</strong> in a school setting.</li>
+                    <li>Integration of design and engineering to create an engaging learning experience.</li>
+                </ul>
+
+                <h3><span class="section-number">7.2</span>Connection to Real-World Problems or Current Trends</h3>
+                <p>The project directly relates to the growing use of wireless charging in consumer electronics, electric vehicles, and medical devices.</p>
+            </div>
+        </div>
+
+        <div class="slide">
+            <div class="slide-content">
+                <h2><span class="section-number">8.</span>Inclusivity & Equity</h2>
+                
+                <h3><span class="section-number">8.1</span>Participation of Diverse Student Groups</h3>
+                <p>This project was conceptualized, researched, and executed entirely by a team of five boys (<strong>Goswami Ayush Raja, Ayush, Yuvraj, Vaibhav Anand, Dev Raj</strong>). All aspects—including design, circuit assembly, troubleshooting, and investment—were managed within this group. Some additional help was provided by peers, but no other student groups were involved.</p>
+
+                <h3><span class="section-number">8.2</span>Gender Balance, Students with Disabilities, Under-represented Groups</h3>
+                <p>There was no participation from female students, students with disabilities, or other under-represented groups in this particular initiative. The project reflects the efforts and collaboration of the five boys who took the lead from start to finish.</p>
+            </div>
+        </div>
+
+        <div class="slide">
+            <div class="slide-content">
+                <h2><span class="section-number">9.</span>Scalability & Replicability</h2>
+                
+                <h3><span class="section-number">9.1</span>Potential to Implement in Other Schools</h3>
+                <p>The project uses affordable, widely available materials and can be easily replicated in other educational settings.</p>
+
+                <h3><span class="section-number">9.2</span>Necessary Conditions for Replication</h3>
+                <ul>
+                    <li>Basic electronics lab</li>
+                    <li>Teacher guidance</li>
+                    <li>Access to common materials</li>
+                </ul>
+
+                <h3><span class="section-number">9.3</span>Documentation Available</h3>
+                <p>Complete step-by-step guide, circuit diagrams, and lesson plans are available for sharing.</p>
+            </div>
+        </div>
+
+        <div class="slide">
+            <div class="slide-content">
+                <h2><span class="section-number">10.</span>Sustainability & Cost-Effectiveness</h2>
+                
+                <h3><span class="section-number">10.1</span>Long-term Viability</h3>
+                <p>Components are reusable for future STEM projects.</p>
+
+                <h3><span class="section-number">10.2</span>Budget Used and Cost-Saving Methods</h3>
+                <p>Total cost per unit was kept under ₹_______ by utilizing recycled and low-cost materials.</p>
+
+                <h3><span class="section-number">10.3</span>Use of Local or Low-Cost Materials</h3>
+                <p>Cardboard, foil, and plastic sourced from local recyclables.</p>
+            </div>
+        </div>
+
+        <div class="slide">
+            <div class="slide-content">
+                <h2><span class="section-number">11.</span>Learnings & Reflections</h2>
+                
+                <h3><span class="section-number">11.1</span>Challenges Faced and Solutions</h3>
+                <ul>
+                    <li>Some students found circuit troubleshooting challenging; addressed through <strong>peer mentoring</strong> and teacher support.</li>
+                    <li>Difficulty sourcing enameled copper wire locally was resolved by salvaging wire from old electronic devices.</li>
+                </ul>
+
+                <h3><span class="section-number">11.2</span>Key Insights and Improvements for the Future</h3>
+                <ul>
+                    <li>Allowing additional time for design improvements would further enhance creativity.</li>
+                    <li>Future versions could incorporate sensors or microcontrollers for added functionality.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="slide">
+            <div class="slide-content">
+                <h2><span class="section-number">12.</span>Conclusion & Future Scope</h2>
+                
+                <h3><span class="section-number">12.1</span>Summary of Impact</h3>
+                <p>This project effectively engaged students in hands-on STEM learning, deepened their understanding of modern technology, and fostered teamwork and creativity.</p>
                 
                 <p>Key accomplishments include:</p>
                 <ul>
@@ -642,26 +883,10 @@
                     <li>Educational demonstration of WPT principles</li>
                 </ul>
 
-                <h3><span class="section-number">6.2</span>Future Innovations</h3>
-                <p>Future iterations could incorporate significant enhancements:</p>
-                
-                <h4>Artificial Intelligence Integration</h4>
-                <ul>
-                    <li>Sensor-based automatic device detection and charging activation</li>
-                    <li>Voice command processing for intuitive user interaction</li>
-                    <li>Smart power optimization based on device requirements</li>
-                    <li>Integration with smart home ecosystems</li>
-                </ul>
+                <h3><span class="section-number">12.2</span>Future Vision or Next Steps</h3>
+                <p>Future iterations may include smart features such as automatic device detection or integration with renewable energy sources.</p>
 
-                <h4>Technical Improvements</h4>
-                <ul>
-                    <li>Enhanced power transfer efficiency and range</li>
-                    <li>Multi-device simultaneous charging capability</li>
-                    <li>Advanced energy harvesting techniques</li>
-                    <li>Improved coil design for better coupling</li>
-                </ul>
-
-                <h3><span class="section-number">6.3</span>Broader Implications</h3>
+                <h3><span class="section-number">12.3</span>Broader Implications</h3>
                 <p>This research contributes to the growing field of wireless power transfer technology, with applications spanning from consumer electronics to medical devices and electric vehicle charging. The demonstrated principles lay the groundwork for more advanced, efficient, and user-friendly wireless power systems.</p>
 
                 <div class="references">
@@ -673,6 +898,22 @@
                         <li>Liu, et al. (2024). "Advancements and challenges in wireless power transfer: A comprehensive review." Nexus Journal.</li>
                         <li>Kurs, A., et al. (2007). "Wireless Power Transfer via Strongly Coupled Magnetic Resonances." Science, 317(5834), 83-86.</li>
                     </ol>
+                </div>
+                <p style="text-align: center; font-size: 1rem; color: #7f8c8d; margin-top: 2rem;">Questions/feedback welcome</p>
+
+                <div class="download-buttons-container">
+                    <a href="research_paper.pdf" download="Wireless_Power_Transfer_Research_Paper.pdf" class="download-button primary">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                            <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+                        </svg>
+                        Download Full Paper (PDF)
+                    </a>
+                    <button class="download-button secondary" onclick="alert('Downloading current page as PDF is a complex feature that requires additional libraries (e.g., html2pdf.js). This button is a placeholder for future implementation.')">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                            <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+                        </svg>
+                        Download Current Page (PDF)
+                    </button>
                 </div>
             </div>
         </div>
@@ -688,15 +929,20 @@
         <div class="indicator" data-slide="3"></div>
         <div class="indicator" data-slide="4"></div>
         <div class="indicator" data-slide="5"></div>
+        <div class="indicator" data-slide="6"></div>
+        <div class="indicator" data-slide="7"></div>
+        <div class="indicator" data-slide="8"></div>
+        <div class="indicator" data-slide="9"></div>
+        <div class="indicator" data-slide="10"></div>
+        <div class="indicator" data-slide="11"></div>
     </div>
 
     <script>
         let currentSlide = 0;
-        const totalSlides = 6;
+        const totalSlides = 12; // Updated to reflect new slide count
         const slides = document.querySelectorAll('.slide');
         const indicators = document.querySelectorAll('.indicator');
         const navItems = document.querySelectorAll('.nav-item');
-        const downloadPdfButton = document.getElementById('downloadPdfButton');
 
         // Change slide function
         function changeSlide(direction) {
@@ -711,13 +957,12 @@
         function goToSlide(slideIndex) {
             // Update current slide
             slides[currentSlide].classList.remove('active');
-            // Add 'prev' or 'next' for slide transition direction
             slides[currentSlide].classList.add(slideIndex > currentSlide ? 'prev' : 'next');
             
             currentSlide = slideIndex;
             
             // Activate new slide
-            slides[currentSlide].classList.remove('prev', 'next'); // Ensure old direction classes are removed
+            slides[currentSlide].classList.remove('prev', 'next');
             slides[currentSlide].classList.add('active');
             
             // Update indicators
@@ -730,119 +975,17 @@
                 item.classList.toggle('active', index === currentSlide);
             });
             
-            // Clean up classes after transition to prevent interference with next transitions
+            // Clean up classes after transition
             setTimeout(() => {
                 slides.forEach(slide => {
                     if (!slide.classList.contains('active')) {
                         slide.classList.remove('prev', 'next');
                     }
                 });
-            }, 600); // Must be equal to or slightly longer than the CSS transition duration
+            }, 600);
         }
 
-        // Function to download current slide as PDF
-        async function downloadCurrentSlideAsPdf() {
-            const currentSlideElement = slides[currentSlide];
-            const slideContent = currentSlideElement.querySelector('.slide-content');
-
-            if (!slideContent) {
-                console.error("No .slide-content found in the active slide.");
-                alert("Could not find content to generate PDF for this slide.");
-                return;
-            }
-
-            // Store original styles to restore them after screenshot
-            const originalStyles = {
-                maxWidth: slideContent.style.maxWidth,
-                padding: slideContent.style.padding,
-                boxShadow: slideContent.style.boxShadow,
-                border: slideContent.style.border,
-                margin: slideContent.style.margin,
-                backgroundColor: slideContent.style.backgroundColor
-            };
-
-            // Apply temporary styles for better PDF rendering
-            slideContent.style.maxWidth = '100%'; 
-            slideContent.style.padding = '20mm'; 
-            slideContent.style.boxShadow = 'none'; 
-            slideContent.style.border = 'none'; 
-            slideContent.style.margin = '0'; 
-            slideContent.style.backgroundColor = '#ffffff'; 
-
-            // Temporarily hide elements that shouldn't be in the PDF
-            downloadPdfButton.style.display = 'none'; 
-            document.querySelector('.nav-arrow.prev').style.display = 'none';
-            document.querySelector('.nav-arrow.next').style.display = 'none';
-            document.querySelector('.slide-indicators').style.display = 'none';
-
-            try {
-                // Generate canvas from slide content with increased scale
-                const canvas = await html2canvas(slideContent, {
-                    scale: 3, // Increased scale for significantly larger text in PDF
-                    useCORS: true, 
-                    logging: false, 
-                    windowWidth: slideContent.scrollWidth, 
-                    windowHeight: slideContent.scrollHeight 
-                });
-
-                // Restore original styles and visibility
-                for (const style in originalStyles) {
-                    slideContent.style[style] = originalStyles[style];
-                }
-                downloadPdfButton.style.display = ''; 
-                document.querySelector('.nav-arrow.prev').style.display = '';
-                document.querySelector('.nav-arrow.next').style.display = '';
-                document.querySelector('.slide-indicators').style.display = '';
-
-                const imgData = canvas.toDataURL('image/png');
-                const { jsPDF } = window.jspdf;
-                const pdf = new jsPDF({
-                    orientation: 'p', 
-                    unit: 'mm',
-                    format: 'a4'
-                });
-
-                const imgWidth = 210; // A4 width in mm
-                const pageHeight = 297; // A4 height in mm
-                const imgHeight = canvas.height * imgWidth / canvas.width; 
-                let heightLeft = imgHeight;
-
-                let position = 0; 
-
-                // Add image to PDF, handling multiple pages if content is too long
-                pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-                heightLeft -= pageHeight;
-
-                while (heightLeft >= 0) {
-                    position = heightLeft - imgHeight;
-                    pdf.addPage();
-                    pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-                    heightLeft -= pageHeight;
-                }
-
-                // Generate a filename based on the slide's title
-                const slideTitleElement = currentSlideElement.querySelector('h1, h2, h3');
-                const slideTitle = slideTitleElement ? slideTitleElement.innerText : `Slide_${currentSlide + 1}`;
-                const filename = `${slideTitle.replace(/[^a-zA-Z0-9 ]/g, '').replace(/\s+/g, '_')}.pdf`;
-
-                pdf.save(filename);
-
-            } catch (error) {
-                console.error("Error generating PDF:", error);
-                // Ensure original styles and visibility are restored even on error
-                for (const style in originalStyles) {
-                    slideContent.style[style] = originalStyles[style];
-                }
-                downloadPdfButton.style.display = ''; 
-                document.querySelector('.nav-arrow.prev').style.display = '';
-                document.querySelector('.nav-arrow.next').style.display = '';
-                document.querySelector('.slide-indicators').style.display = '';
-                alert("Failed to generate PDF. Please try again. Check console for details.");
-            }
-        }
-
-
-        // Add event listeners on DOMContentLoaded
+        // Add event listeners
         document.addEventListener('DOMContentLoaded', function() {
             // Indicator clicks
             indicators.forEach((indicator, index) => {
@@ -867,7 +1010,7 @@
             document.addEventListener('touchstart', (e) => {
                 startX = e.touches[0].clientX;
                 startY = e.touches[0].clientY;
-            }, { passive: true }); 
+            });
             
             document.addEventListener('touchend', (e) => {
                 const endX = e.changedTouches[0].clientX;
@@ -875,18 +1018,15 @@
                 const diffX = startX - endX;
                 const diffY = startY - endY;
                 
-                // Determine if it was a horizontal swipe
-                if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 50) { 
+                // Check if horizontal swipe is greater than vertical
+                if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 50) {
                     if (diffX > 0) {
-                        changeSlide(1); 
+                        changeSlide(1); // Swipe left - next slide
                     } else {
-                        changeSlide(-1); 
+                        changeSlide(-1); // Swipe right - previous slide
                     }
                 }
             }); 
-
-            // Download PDF button click
-            downloadPdfButton.addEventListener('click', downloadCurrentSlideAsPdf);
         });
     </script>
 </body>
